@@ -11,9 +11,8 @@ size(y_train);
 % Normalize the features
 X = normalized(X_train);
 
-% Plotting the features individually against Y
+%% Plotting the features individually against Y
 figure;
-offset = 10;
 side = 7;
 for k = 1:size(X, 2)
     subplot(side, side, k);
@@ -22,7 +21,23 @@ for k = 1:size(X, 2)
 end;
 % Note that features 37 to 44 have discrete values!
 
-% Compute the correlation between the features and spot the largest ones
+%% Plotting the features against each other
+figure;
+offset = 0;
+side = 10;
+for i = 1:side
+    for j  = 1:side
+        subplot(side, side, (i - 1) * side + j);
+        plot(X(:, i+offset), X(:, j+offset), '.');
+        title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
+    end;
+end;
+
+% We spot some correlations (but not that many).
+% Use ACP for dimensionality reduction?
+
+
+%% Compute the correlation between the features and spot the largest ones
 
 % Eliminate the duplicate features
 
