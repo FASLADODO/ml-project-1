@@ -121,4 +121,17 @@ correlatedVariables
 % Eliminate the duplicate features
 
 
-%% Detect and delete the outliers
+%% Dummy variables
+
+%% Dummy variables
+
+Xc = X(:,[36:end]);
+Xnew = [];
+for i = 1:size(Xc,2);
+   Xdummy = dummyvar(Xc(:,i)+1);
+   Xnew = [Xnew Xdummy];
+end
+X = [X(:,[1:35]) Xnew];
+   
+imagesc(X); colorbar;
+
