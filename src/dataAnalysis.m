@@ -87,16 +87,17 @@ end;
 % grid search on the threshold value?)
 
 %% Plotting the features against each other
-figure;
-offset = 0;
-side = 10;
-for i = 1:side
-    for j  = 1:side
-        subplot(side, side, (i - 1) * side + j);
-        plot(X(:, i+offset), X(:, j+offset), '.');
-        title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
-    end;
-end;
+
+% figure;
+% offset = 0;
+% side = 10;
+% for i = 1:side
+%     for j  = 1:side
+%         subplot(side, side, (i - 1) * side + j);
+%         plot(X(:, i+offset), X(:, j+offset), '.');
+%         title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
+%     end;
+% end;
 
 % We spot some correlations (but not that many).
 % Use ACP for dimensionality reduction?
@@ -116,9 +117,11 @@ for i = 1:length(correlatedVariables)
     correlatedVariables(i, 3) = correlations(correlatedVariables(i, 1), correlatedVariables(i, 2));
 end;
 correlatedVariables = sortrows(correlatedVariables, [-3, 1, 2]);
+% We obtain the highest correlation coefficients and the corresponding
+% input variables indices
 correlatedVariables
 
-% Eliminate the duplicate features
+% Eliminate the features which do not give information
 
 
 %% Dummy variables
