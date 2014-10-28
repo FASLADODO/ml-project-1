@@ -1,12 +1,7 @@
-function beta = ridgeRegression(y, tX, alpha)
+function beta = ridgeRegression(y, tX, lambda)
 % Learn model parameters beta using Ridge Regression
-% alpha: gradient descent step size
-
-  % TODO: learn lambda using k-fold cross-validation
-  lambda = 1;
-
-  gramMatrix = (tX' * tX);
-  l = lambda * eye(size(gramMatrix));
-  beta = (gramMatrix + l) \ (tX' * y);
-
+% lambda: penalization parameter
+    gramMatrix = (tX' * tX);
+    l = lambda * eye(size(gramMatrix));
+    beta = (gramMatrix + l) \ (tX' * y);
 end
