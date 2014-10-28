@@ -1,4 +1,5 @@
-addpath('../data');
+addpath(genpath('./data'), genpath('../data'));
+addpath(genpath('./src'), genpath('../src'));
 
 %% Regression data exploratory analysis
 clear;
@@ -32,7 +33,7 @@ for k = 1:size(X, 2)
     title(['X', int2str(k)]);
 end;
 
-% X35 looks weird : outliers or 2 gaussians ? 
+% X35 looks weird : outliers or 2 gaussians ?
 % Comparing input to ouput reveals we might face two models superposed. We
 % might be able to separate them based on the categorical data or thanks to
 % X35. Data looks linearly separable -> classification and then regression
@@ -70,7 +71,7 @@ for k = 1:size(X, 2)
 end;
 
 % Interesting plot to put in the report to show the categorical variables
-% are not correlated with the hypothetical two models 
+% are not correlated with the hypothetical two models
 
 t = X(:, 35) > 1;
 figure;
@@ -135,6 +136,6 @@ for i = 1:size(Xc,2);
    Xnew = [Xnew Xdummy];
 end
 X = [X(:,[1:35]) Xnew];
-   
+
 imagesc(X); colorbar;
 
