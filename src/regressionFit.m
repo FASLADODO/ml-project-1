@@ -19,11 +19,23 @@ X_test(:,1:35) = normalized(X_test(:,1:35));
 beta0 = mean(y);
 trErr0 = computeRmse(y, tX(:, 1) * beta0);
 teErr0 = computeRmse(y_test, tX_test(:, 1) * beta0);
-fprintf('Base cost with a 1-parameter model: %f | %f\n', trErr0, teErr0);
+fprintf('Base error with a 1-parameter model: %f | %f\n', trErr0, teErr0);
 
 %% Train a linear model using simple least squares
 betaLS = leastSquares(y, tX);
 
 trErrLS = computeRmse(y, tX * betaLS);
 teErrLS = computeRmse(y_test, tX_test * betaLS);
-fprintf('Base cost with least squares: %f | %f\n', trErrLS, teErrLS);
+fprintf('Error with least squares: %f | %f\n', trErrLS, teErrLS);
+
+%% Train a linear model using ridge regression
+proportion = 0.5; % Train / test split
+k = 5; % k-fold cross validation
+lambdas = logspace(-4, 4, 100);
+% We leave X_test and y_test out of the learning process of ridge
+% regression to be able to test its results on truly fresh data
+betaRR = ridgeRegressionAuto(y, tX, proportion, k, lambdas);
+
+trErrRR = computeRmse(y, tX * betaRR);
+teErrRR = computeRmse(y_test, tX_test * betaRR);
+fprintf('Error with ridge regression: %f | %f\n', trErrRR, teErrRR);

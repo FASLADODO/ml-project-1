@@ -1,8 +1,9 @@
 function [XTr, yTr, XTe, yTe] = split(y, X, prop, seed)
 % randomly split the data into train and test given a proportion
-    if(nargin >= 4)
-        setSeed(seed);
+    if(nargin < 4)
+        seed = 1;
     end;
+    setSeed(seed);
     
     N = size(y,1);
     
