@@ -60,3 +60,21 @@ for k = 1:size(X_m2, 2)
     plot(X_m2(:, k), y_m2, '.');
     title(['X_{m2}', int2str(k), ' versus y_{m2}']);
 end;
+
+
+%% Modele 1 : Compute the correlation between the features
+
+correlatedVariables = computeFeaturesCorrelations(X_m1);
+correlatedVariables
+
+% There are very high correlations between some data : ex X25/X26, X13/X8,
+% X16/X2. Even stronger than without separating the dataset which make
+% sense.
+
+%% Modele 2 : Compute the correlation between the features
+
+correlatedVariables = computeFeaturesCorrelations(X_m2);
+% We obtain the highest correlation coefficients and the corresponding
+% input variables indices
+correlatedVariables
+

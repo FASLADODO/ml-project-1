@@ -46,17 +46,29 @@ end;
 
 %% Plotting the features against each other
 
-figure;
-offset = 0;
-side = 10;
-for i = 1:side
-    for j  = 1:side
-        subplot(side, side, (i - 1) * side + j);
-        plot(X(:, i+offset), X(:, j+offset), '.');
-        title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
-    end;
-end;
+% figure;
+% offset = 0;
+% side = 10;
+% for i = 1:side
+%     for j  = 1:side
+%         subplot(side, side, (i - 1) * side + j);
+%         plot(X(:, i+offset), X(:, j+offset), '.');
+%         title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
+%     end;
+% end;
 
+
+%% Compute the correlation between the features and spot the largest ones
+
+
+correlatedVariables = computeFeaturesCorrelations(X);
+% We obtain the highest correlation coefficients and the corresponding
+% input variables indices
+correlatedVariables
+
+% We find some strong negative correlations as well as positive ones
+
+% Eliminate the features which do not give information
 %% Dummy variables
 
 Xc = X(:,[30:end]);
