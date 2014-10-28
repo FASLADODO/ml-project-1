@@ -10,7 +10,7 @@ function savePlot(xLabel, yLabel, filename)
     grid on;
 
     % Print the file to pdf
-    print('-dpdf', [filename, '.pdf']);
+    print('-dpdf', filename);
 
     % Next you should CROP PDF using pdfcrop in linux and mac
 end
