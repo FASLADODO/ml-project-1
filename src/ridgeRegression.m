@@ -3,7 +3,7 @@ function beta = ridgeRegression(y, tX, alpha)
 % alpha: gradient descent step size
 
   gramMatrix = (tX' * tX);
-  l = lambda * eye(size(gramMatrix));
+  l = alpha * eye(size(gramMatrix));
   beta = (gramMatrix + l) \ (tX' * y);
 
 end

@@ -4,13 +4,13 @@ function beta = leastSquaresGD(y, tX, alpha)
 
   % algorithm parametesfor maximum iterations and convergence
   maxIters = 1000;
-  convergence_th = 1e-05; % convergence threshold
+  convergence_th = 0; % convergence threshold
 
   % initialize
   beta = zeros(size(tX, 2), 1);
 
   L_last = 0;
-  
+
   % iterate
   for k = 1:maxIters
     % compute gradient 
