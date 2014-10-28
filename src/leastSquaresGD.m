@@ -17,7 +17,7 @@ function beta = leastSquaresGD(y, tX, alpha)
     g = computeGradient(y, tX, beta);
 
     % compute cost
-    L = computeRmse(y, tX, beta);
+    L = computeRmse(y, tX * beta);
 
     % update beta
     beta = beta - alpha * g;
