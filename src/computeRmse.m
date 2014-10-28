@@ -1,9 +1,9 @@
-function cost = computeRmse(y, tX, beta)
-	cost = sqrt(2 * computeMse(y, tX, beta));
+function cost = computeRmse(y, yHat)
+	cost = sqrt(2 * computeMse(y, yHat));
 end
 
-function err = computeMse(y, tX, beta)
+function err = computeMse(y, yHat)
 	n = size(y, 1);
-	e = y - (tX * beta);
+	e = y - yHat;
 	err = (e' * e) / (2 * n);
 end
