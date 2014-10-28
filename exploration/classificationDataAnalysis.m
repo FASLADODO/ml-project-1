@@ -19,10 +19,8 @@ X = [X(:,2:14) X(:,16:29) X(:,31:end) X(:,1) X(:,15) X(:,30)];
 X(:,1:29) = normalized(X(:,1:29));
 
 % Removing the outliers
-threshold = 10; % outliers are more than 11 standard deviation from the median
+threshold = 10; % outliers are more than 10 standard deviation from the median
 [X y] = removeOutliers(X,y,threshold);
-
-hist(X(:, 22));
 
 %% Output Visualization
 hist(y);
@@ -58,3 +56,19 @@ for i = 1:side
         title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
     end;
 end;
+
+%% Dummy variables
+
+Xc = X(:,[30:end]);
+Xnew = [];
+for i = 1:size(Xc,2);
+   Xdummy = dummyvar(Xc(:,i)+1);
+   Xnew = [Xnew Xdummy];
+end
+X = [X(:,[1:29]) Xnew];
+
+imagesc(X); colorbar;
+
+% Now with dummy encoding we have binary variables from X30 to X46
+% /!\ make sure you don't run that code several time or it will create
+% other dummyvar from existing dummyvar
