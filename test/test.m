@@ -1,4 +1,4 @@
-addpath('./src')
+addpath(genpath('./src'), genpath('../src'))
 
 % Run this to make sure your implementation is correct
 % An example of writing csv file is given in the end of this file

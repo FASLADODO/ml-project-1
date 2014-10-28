@@ -45,7 +45,7 @@ figure;
 side = 7;
 for k = 1:size(X, 2)
     subplot(side, side, k);
-    plot(X(:, k), y_train, '.');
+    plot(X(:, k), y, '.');
     title(['X', int2str(k), ' versus Y']);
 end;
 % There is a certain number of datapoints with high Y (output) value.
@@ -124,9 +124,6 @@ correlatedVariables
 
 % Eliminate the features which do not give information
 
-
-%% Dummy variables
-
 %% Dummy variables
 
 Xc = X(:,[36:end]);
@@ -139,3 +136,6 @@ X = [X(:,[1:35]) Xnew];
 
 imagesc(X); colorbar;
 
+% Now with dummy encoding we have binary variables from X36 to X59
+% /!\ make sure you don't run that code several time or it will create
+% other dummyvar from existing dummyvar
