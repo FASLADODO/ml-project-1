@@ -57,8 +57,4 @@ tY = 1.0 ./ (1.0 + exp(-tX * tBeta)) > 0.5;
 assert(sum(tY ~= y) / size(y,1) < 0.2);
 disp('OK!');
 
-% code for writing csv files
-tY = 1.0 ./ (1.0 + exp(-tX * tBeta));
-csvwrite('predictions_classification.csv', tY);
-
 disp('test finished successfully');
