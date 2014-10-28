@@ -1,4 +1,5 @@
-addpath('../data');
+addpath(genpath('./data'), genpath('../data'));
+addpath(genpath('./src'), genpath('../src'));
 
 %% Data pre-processing
 clear;
