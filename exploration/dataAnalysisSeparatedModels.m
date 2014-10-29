@@ -42,6 +42,8 @@ end;
 % it does look better. We could have nicer results with a more accurate
 % threshold when separating the dataset
 
+
+
 %% Model 2 Visualization
 hist(y_m2);
 
@@ -77,4 +79,3 @@ correlatedVariables = computeFeaturesCorrelations(X_m2);
 % We obtain the highest correlation coefficients and the corresponding
 % input variables indices
 correlatedVariables
-

@@ -18,6 +18,7 @@ X = [X(:,2:14) X(:,16:29) X(:,31:end) X(:,1) X(:,15) X(:,30)];
 
 X(:,1:29) = normalized(X(:,1:29));
 
+
 % Removing the outliers
 threshold = 10; % outliers are more than 10 standard deviation from the median
 [X y] = removeOutliers(X,y,threshold);
