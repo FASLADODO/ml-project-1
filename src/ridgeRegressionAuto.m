@@ -38,7 +38,8 @@ function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportio
         end;
     end;
     
-    % Plot
+%     Plot (commented for regressionFitSelectFeatures script which provide
+%     plots of averaged results on different seeds)
 %     figure;
 %     semilogx(lambdaValues, trainingErr, '.-b');
 %     hold on;

@@ -15,18 +15,24 @@ size(y);
 
 % Normalize the features except discrete ones
 X(:,1:35) = normalized(X(:,1:35));
+%X = [X(:,1:12) X(:,15) X(:,17) X(:,19:24) X(:,26) X(:,28) X(:,30:end)]; %
+%results seems nice but ridge reg graphes are little bit less impressives
 %X = [X(:,26) X(:,35)];
 
 
-%%
+%% Polynomials tests with ridge regression
+% We apply here ridge regression to test our model using polynomials
+% functions because the resulting matrix of the applied basis functions is
+% singular
+
 proportion = 0.8;
 maxDegree = 6;
 maxSeeds = 50;
 
-%ridgeTrErr = zeros(size(X,1),maxSeeds);
-%ridgeTeErr = zeros(size(X,1),maxSeeds);
 rmseTr = zeros(maxSeeds,maxDegree);
 rmseTe = zeros(maxSeeds,maxDegree);
+rmseTrMean = zeros(maxDegree);
+rmseTeMean = zeros(maxDegree);
 
 degrees = [1:maxDegree];
 for degree = 1:length(degrees);
@@ -64,7 +70,7 @@ for degree = 1:length(degrees);
     rmseTeMean(degree) = mean(rmseTe(:,degree));
     rmseTrStd(degree) = std(rmseTr(:,degree));
     rmseTeStd(degree) = std(rmseTe(:,degree));
-    fprintf('Degree %d with %d seeds : Train RMSE :%0.4f (std : %0.4f) Test RMSE :%0.4f (std : %0.4f)\n', degree, maxSeeds, rmseTrMean(degree), rmseTrStd(degree), rmseTeMean(degree), rmseTeStd(degree));
+    fprintf('Degree %d with %d seeds - Train RMSE: %0.4f (std: %0.4f) Test RMSE: %0.4f (std: %0.4f)\n', degree, maxSeeds, rmseTrMean(degree), rmseTrStd(degree), rmseTeMean(degree), rmseTeStd(degree));
 
     % plot training and test error wrt lambdas averaged on different seeds
     rigdeTrErrMean = mean(ridgeTrErr,2);
@@ -79,6 +85,15 @@ end
 
 %% Boxplots on different polynomials to visualize above printed results
 figure;
+boxplot(rmseTr, 'notch', 'on');
+ylabel(['RMSE over ', int2str(maxSeeds) ' seeds']);
+title(sprintf('RMSE on Train data on polynomials up to %d degrees',maxDegree))
+
+figure;
 boxplot(rmseTe, 'notch', 'on');
-ylabel(['RMSE on ', int2str(maxSeeds) ' seeds']);
-title(sprintf('RMSE on polynomials up to %d',maxDegree))
+ylabel(['RMSE over ', int2str(maxSeeds) ' seeds']);
+title(sprintf('RMSE on Test data on polynomials up to %d degrees',maxDegree))
+
+% Polynomial with degree 4 seems the best (almost smallest errors + a very
+% reasonable variance over repetition on different seeds = seems stable)
+% TO DO next : validation with CV

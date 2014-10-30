@@ -6,7 +6,7 @@ EPFL's Pattern Classification and Machine Learning first course project
 ## TO DO Project 
 
 Basis functions
-- Try ridge regression on several seeds for different degrees and plot + check stability
+X Try ridge regression on several seeds for different degrees and plot + check stability
 - Select a few degrees and do cross validation
 
 Features selection
