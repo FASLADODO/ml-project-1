@@ -14,30 +14,64 @@
 \usepackage{ifthen}
 \usepackage{natbib}
 
-\title{Machine Learning Project I by Group Kathmandu}
+
+\title{Project-I by Group KATHMANDU}
 
 \author{
-  Jade Copet \And
-  Merlin Nimier-David \And
-  Krishna Raj Sapkota
+Jade Copet\\
+EPFL \\
+\texttt{jade.copet@epfl.com} \\
+\And
+Merlin Nimier David\\
+EPFL \\
+\texttt{...@epfl.com} \\
+\And
+Krishna Raj Sapkota\\
+EPFL \\
+\texttt{...@epfl.com} \\
 }
-\nipsfinalcopy
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\nipsfinalcopy 
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-  TODO
+In this report, we summarize our findings for the project-I on regression and classification.
 \end{abstract}
 
-\section{Data Description}
+\section{Regression data description}
+Our train-data consists of output variables $\mathbf{y}$ and input variables $\mathbf{X}$. We have $N=1400$ data examples. Each input vector $\mathbf{x}_n$ is of dimensionality $D=44$. Out of these 44 variables, 35 variables are real valued while 4 variables are binary and 5 variables are categorical, 4 of them with 4 categories and 1 with 3 categories.
+
+We also have test-data where we do not observe $\mathbf{y}$. We have $N=600$ test examples. Our goal is to produce predictions for test examples, as well as an approximation of the test-error.
 
 \section{Data visualization and cleaning}
+- y distribution (histogram) notice 2 different shapes (can't be outliers)\\
+- (Not rank deficient)\\
+- Normalization\\
+- Model separation : with the X against Y plots with data separated wrt X35 value. Explain why it should not be considered as outliers \\
+- Correlations : results in a table ? we might be able to remove some features (go to regressionFitSelectedFeatures)\\
+- Dummy variables encoding
 
-\section{Ridge regression}
+\section{Regression fit}
+- one-variable model VS least squares VS ridge regression\\
+- RMSE errors\\
+- Discussion on overfitting, proportion selection, validation...
 
 \section{Feature transformations}
+- use ridge regression because of the resulting matrix singularity\\
+- compare different polynomial degrees (box plots, rmse values), selection and validation
+
+\section{Predictions}
 
 \section{Summary}
 
