@@ -21,10 +21,9 @@ function [err, gradient, hessian] = logisticRegressionLoss(y, tX, beta)
 end
 
 function err = computeLogisticRegressionMse(y, tX, beta)
+% Error is the negative of log-likelihood (normalized by the number of
+% data examples).
     n = size(y, 1);
-    
-	%e = y - binaryPrediction(tX, beta);
-	%err = (e' * e) / (2 * n);
     
     lSigmoid = logSigmoid(tX * beta);
     logLikelihood = sum(y .* lSigmoid + (1 - y) .* log(1 - exp(lSigmoid)));
@@ -39,5 +38,5 @@ function g = computeLogisticRegressionGradient(y, tX, beta)
     
 	A = tX * beta;
 	lSigmoid = logSigmoid(A);
-	g = tX' * (exp(lSigmoid) - y) ./ n;
+	g = tX' * (exp(lSigmoid) - y) / n;
 end
