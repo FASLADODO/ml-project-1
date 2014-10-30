@@ -14,7 +14,7 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
     betaStar = beta;
     
 	% Convergence criterion
-	epsilon = 0.000001;
+	epsilon = 0.00001;
 	k = 0;
     err = -1; bestError = -1;
 	progress = 10;
@@ -36,7 +36,7 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
 		end;
         
         % Status
-		fprintf('%d| L = %.2f,  beta = [%.2f %.2f %2f]\n', k, err, beta(1), beta(2), beta(3));
+		%fprintf('%d| L = %.2f,  beta = [%.2f %.2f %2f]\n', k, err, beta(1), beta(2), beta(3));
 	end;
     
     if(k < maxIters)
