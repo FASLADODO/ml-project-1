@@ -1,4 +1,4 @@
-function betaStar = ridgeRegressionAuto(y, tX, proportion, k, lambdaValues)
+function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportion, k, lambdaValues)
 % Learn model parameters beta and best lambda using k-fold cross-validation
 % Plot the error respective to lambda
 %
@@ -39,10 +39,10 @@ function betaStar = ridgeRegressionAuto(y, tX, proportion, k, lambdaValues)
     end;
     
     % Plot
-    figure;
-    semilogx(lambdaValues, trainingErr, '.-b');
-    hold on;
-    semilogx(lambdaValues, testErr, '.-r');
-    xlabel('Lambda');
-    ylabel('Training (blue) and test (red) error');
+%     figure;
+%     semilogx(lambdaValues, trainingErr, '.-b');
+%     hold on;
+%     semilogx(lambdaValues, testErr, '.-r');
+%     xlabel('Lambda');
+%     ylabel('Training (blue) and test (red) error');
 end
