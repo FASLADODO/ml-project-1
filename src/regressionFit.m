@@ -13,8 +13,7 @@ tX = [ones(N, 1) X];
 tX_test = [ones(length(y_test), 1) X_test];
 
 % Normalize the features except discrete ones
-X(:,1:35) = normalized(X(:,1:35));
-X_test(:,1:35) = normalized(X_test(:,1:35));
+[X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
 
 %% Get a baseline for the cost by fitting a one-variable model
 beta0 = mean(y);
@@ -32,7 +31,7 @@ fprintf('Error with least squares: %f | %f\n', trErrLS, teErrLS);
 %% Train a linear model using ridge regression
 proportion = 0.5; % Train / test split
 k = 5; % k-fold cross validation
-lambdas = logspace(-4, 4, 100);
+lambdas = logspace(0, 2, 100);
 % We leave X_test and y_test out of the learning process of ridge
 % regression to be able to test its results on truly fresh data
 betaRR = ridgeRegressionAuto(y, tX, proportion, k, lambdas);
