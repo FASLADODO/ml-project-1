@@ -28,18 +28,37 @@ colorbar;
 
 %% Correlation input/output
 
-selector = @(x) abs(x) > 0.4;
+selector = @(x) abs(x) < 0.1;
 [correlatedVariables, correlations] = findCorrelations(selector, X, y);
 correlatedVariables
 
 % X26 and X35 are the features with the strongest correlations
 
-%% 
+%% Regression fitting only on X26 and X35
 
 Xt = [X(:,26) X(:,35)];
 
-[X, y, X_test, y_test] = split(y, Xt, 0.8, 1);
+%% Comparison between the above Xl and the full X feature matrices
 
-N = length(y);
-tX = [ones(N, 1) X];
-tX_test = [ones(length(y_test), 1) X_test];
+seedsNb = 50;
+res = compareFeaturesSet(y, X, Xt, seedsNb);
+
+%% Regression fit selecting only one out of 2 of the strongly correlated variables
+% Removed variables (highest correlation between ft and lowest to output)
+% 13.0000
+% 14.0000
+% 16.0000
+% 18.0000
+% 25.0000
+% 27.0000
+% 29.0000
+
+Xl = [X(:,1:12) X(:,15) X(:,17) X(:,19:24) X(:,26) X(:,28) X(:,30:end)];
+
+%% Comparison between the above Xl and the full X feature matrices
+
+seedsNb = 50;
+res = compareFeaturesSet(y, X, Xl, seedsNb);
+
+% Results with Xl are very close to the one we have with X and we have the
+% same stability of results
