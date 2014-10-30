@@ -104,9 +104,14 @@ end;
 % Use ACP for dimensionality reduction?
 
 %% Compute the correlation between the features and spot the largest ones
-
-correlatedVariables = computeFeaturesCorrelations(X);
+ 
+selector = @(x) abs(x) > 0.4;
+[correlatedVariables, correlations] = findCorrelations(selector, X);
 correlatedVariables
+
+figure;
+imagesc(correlations);
+colorbar;
 
 % Eliminate the features which do not give information
 
@@ -127,21 +132,20 @@ imagesc(X); colorbar;
 % other dummyvar from existing dummyvar
 
 %% Correlation input/output
-%R=corrcoef(X(:,3),y)
 
-correlations = corr(X,y);
+selector = @(x) abs(x) > 0.4;
+[correlatedVariables, correlations] = findCorrelations(selector, X, y);
+correlatedVariables
 
-figure;
-imagesc(correlations);
-colorbar;
-
-[corrI, corrJ] = find(abs(correlations) > 0.4);
-idx = (corrI - corrJ > 0);
-correlationWithOutput = [corrI(idx) corrJ(idx)];
-for i = 1:length(correlationWithOutput)
-    correlationWithOutput(i, 3) = correlations(correlationWithOutput(i, 1), correlationWithOutput(i, 2));
-end;
-correlationWithOutput = sortrows(correlationWithOutput, [-3, 1, 2]);
-correlationWithOutput
 % We obtain the highest correlation coefficients and the corresponding
 % input variables indices
+
+%% 
+
+Xt = [X(:,26) X(:,35)];
+
+[X, y, X_test, y_test] = split(y, Xt, 0.8, 1);
+
+N = length(y);
+tX = [ones(N, 1) X];
+tX_test = [ones(length(y_test), 1) X_test];
