@@ -125,3 +125,23 @@ imagesc(X); colorbar;
 % Now with dummy encoding we have binary variables from X36 to X59
 % /!\ make sure you don't run that code several time or it will create
 % other dummyvar from existing dummyvar
+
+%% Correlation input/output
+%R=corrcoef(X(:,3),y)
+
+correlations = corr(X,y);
+
+figure;
+imagesc(correlations);
+colorbar;
+
+[corrI, corrJ] = find(abs(correlations) > 0.4);
+idx = (corrI - corrJ > 0);
+correlationWithOutput = [corrI(idx) corrJ(idx)];
+for i = 1:length(correlationWithOutput)
+    correlationWithOutput(i, 3) = correlations(correlationWithOutput(i, 1), correlationWithOutput(i, 2));
+end;
+correlationWithOutput = sortrows(correlationWithOutput, [-3, 1, 2]);
+correlationWithOutput
+% We obtain the highest correlation coefficients and the corresponding
+% input variables indices

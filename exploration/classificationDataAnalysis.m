@@ -12,6 +12,9 @@ y = y_train;
 size(X);
 size(y);
 
+
+
+
 % categorical variables : X1, X15, X30 -> move it at the end of the X
 % matrix : now X30, X31, X32 are categorical variables
 X = [X(:,2:14) X(:,16:29) X(:,31:end) X(:,1) X(:,15) X(:,30)];
@@ -27,6 +30,8 @@ threshold = 10; % outliers are more than 10 standard deviation from the median
 hist(y);
 
 %% Input Visualization
+boxplot(X);
+
 figure;
 side = 6;
 for k = 1:size(X, 2)

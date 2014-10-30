@@ -1,5 +1,6 @@
 % Regression fitting
 addpath(genpath('./data'), genpath('../data'));
+addpath(genpath('./src'), genpath('../src'));
 
 clear;
 load('regression.mat');
