@@ -3,6 +3,19 @@ ml-project-1
 
 EPFL's Pattern Classification and Machine Learning first course project
 
+## TO DO Project 
+
+Basis functions
+- Try ridge regression on several seeds for different degrees and plot + check stability
+- Select a few degrees and do cross validation
+
+Features selection
+- Try to continue removing more features + compare stability with different methods and do cool boxplots
+- Try increasing seeds number
+
+Ridge Regression Auto
+- Implement cross-validation
+
 ## Methods to be implemented
 
 - `beta = leastSquaresGD(y,tX,alpha)`: Least squares using gradient descent (alpha is the step-size)
