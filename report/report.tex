@@ -46,7 +46,7 @@ EPFL \\
 \section{The regression dataset (D1)}
 
   \subsection{Dataset description}
-    Our training data consists of output variables $\mathbf{y}$ and input variables $\mathbf{X}$. We have $N = 1400$ data examples. Each input vector $\mathbf{x}_n$ is of dimensionality $D = 44$. Out of these 44 features, 35 are real-valued while 4 variables are binary and 5 variables are categorical, 4 of them with 4 categories and 1 with 3 categories.
+    Our training data consists of output variable $\mathbf{y}$ and input variables $\mathbf{X}$. We have $N = 1400$ data examples. Each input vector $\mathbf{x}_n$ is of dimensionality $D = 44$. Out of these 44 features, 35 are real-valued while 4 variables are binary and 5 variables are categorical, 4 of them with 4 categories and 1 with 3 categories.
 
     We also have test data where we do not observe $\mathbf{y}$. We have $N = 600$ test examples. Our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
@@ -72,8 +72,10 @@ EPFL \\
 
 
 \section{The classification dataset (D2)}
+  We applied many of the same techniques to D2.
 
   \subsection{Dataset description}
+  This dataset has $N = 1500$ data examples with dimensionality $D = 32$, as well as $N' = 1500$ test examples. Out of these 32 features, 29 are real-valued and 3 are categorical. Output $\mathbf{y}$ is a binary variable, which implies we are faced with a classification problem. 1052 examples belong to class $C_1$ (for which $y = 0$) and 448 examples belong to $C_2$. Like before, our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
 
