@@ -31,6 +31,7 @@ size(y(~t))
 %% Removing the outliers
 threshold = 10; % outliers are more than 10 standard deviation from the median
 [X, y] = removeOutliers(X, y, threshold);
+t = y > 0;
 
 %% Input Visualization
 boxplot(X);
@@ -43,6 +44,7 @@ for k = 1:size(X, 2)
     title(['X', int2str(k)]);
 end;
 
+% This is not very helpful.
 
 %% Plotting the features individually against Y
 
@@ -69,11 +71,10 @@ for i = 1:side
     end;
 end;
 
-
 %% Compute the correlation between the features and spot the largest ones
 
-
-correlatedVariables = computeFeaturesCorrelations(X);
+selector = @(x) abs(x) > 0.4;
+correlatedVariables = findCorrelations(selector, X);
 % We obtain the highest correlation coefficients and the corresponding
 % input variables indices
 correlatedVariables
@@ -81,7 +82,7 @@ correlatedVariables
 % We find some strong negative correlations as well as positive ones
 
 % Eliminate the features which do not give information
-%% Dummy variables
+%% Dummy variables encoding for categorical input variables
 
 Xc = X(:,[30:end]);
 Xnew = [];
