@@ -1,4 +1,4 @@
-function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportion, k, lambdaValues)
+function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, proportion, k, lambdaValues)
 % Learn model parameters beta and best lambda using k-fold cross-validation
 % Plot the error respective to lambda
 %
@@ -15,6 +15,7 @@ function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportio
        lambdaValues = logspace(-2, 2, 100); 
     end;
     n = length(lambdaValues);
+    alpha = 1; % Step size
     
     % Train / test split
     [tXTr, yTr, tXTe, yTe] = split(y, tX, proportion);
@@ -26,10 +27,10 @@ function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportio
         lambda = lambdaValues(i);
         
         % TODO: k-fold cross-validation
-        beta = ridgeRegression(yTr, tXTr, lambda);
+        beta = penLogisticRegression(yTr, tXTr, alpha, lambda);
         
-        trainingErr(i, :) = computeRmse(yTr, tXTr * beta);
-        testErr(i, :) = computeRmse(yTe, tXTe * beta);
+        trainingErr(i, :) = computeLogisticRegressionMse(yTr, tXTr, beta);
+        testErr(i, :) = computeLogisticRegressionMse(yTe, tXTe, beta);
 
         if(testErr(i, :) < bestErr || bestErr < 0)
             betaStar = beta;
@@ -39,12 +40,11 @@ function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportio
     end;
     
     % Plot evolution of train and test error with respect to lambda
-    %{
+    
     figure;
     semilogx(lambdaValues, trainingErr, '.-b');
     hold on;
     semilogx(lambdaValues, testErr, '.-r');
     xlabel('Lambda');
     ylabel('Training (blue) and test (red) error');
-    %}
 end
