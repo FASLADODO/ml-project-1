@@ -117,13 +117,17 @@ colorbar;
 
 %% Dummy variables
 
-Xc = X(:,[36:end]);
+% put every categorical variables at the end
+X = [X(:,1:35) X(:,37) X(:,39) X(:,41:42) X(:,36) X(:,38) X(:,40) X(:,43:44)];
+
+% Dummyvar encoding for categorical variables only
+Xc = X(:,[40:end]);
 Xnew = [];
 for i = 1:size(Xc,2);
    Xdummy = dummyvar(Xc(:,i)+1);
    Xnew = [Xnew Xdummy];
 end
-X = [X(:,[1:35]) Xnew];
+X = [X(:,[1:39]) Xnew];
 
 imagesc(X); colorbar;
 
