@@ -5,15 +5,21 @@ addpath(genpath('./src'), genpath('../src'));
 clear;
 load('regression.mat');
 
-% TODO: vary seed to confirm
+% TODO: vary seed to confirm the stability of the results
 [X, y, X_test, y_test] = split(y_train, X_train, 0.8, 1);
+
+%% Preprocessing
+% We perform dummy variables encoding on categorical variables only
+categoricalVariables = [36 38 40 43 44];
+X = dummyEncoding(X, categoricalVariables);
+X_test = dummyEncoding(X_test, categoricalVariables);
+
+% Normalize features (except the discrete ones)
+[X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
 
 N = length(y);
 tX = [ones(N, 1) X];
 tX_test = [ones(length(y_test), 1) X_test];
-
-% Normalize the features except discrete ones
-[X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
 
 %% Get a baseline for the cost by fitting a one-variable model
 beta0 = mean(y);
