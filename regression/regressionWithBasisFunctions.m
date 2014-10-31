@@ -73,6 +73,7 @@ for degree = 1:length(degrees);
     fprintf('Degree %d with %d seeds - Train RMSE: %0.4f (std: %0.4f) Test RMSE: %0.4f (std: %0.4f)\n', degree, maxSeeds, rmseTrMean(degree), rmseTrStd(degree), rmseTeMean(degree), rmseTeStd(degree));
 
     % plot training and test error wrt lambdas averaged on different seeds
+    % plot on 2 different figures for the report
     rigdeTrErrMean = mean(ridgeTrErr,2);
     rigdeTeErrMean = mean(ridgeTeErr,2);
     semilogx(lambdas, rigdeTrErrMean, '.-b');
