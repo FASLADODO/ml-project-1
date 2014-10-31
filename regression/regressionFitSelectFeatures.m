@@ -61,4 +61,4 @@ seedsNb = 50;
 res = compareFeaturesSet(y, X, Xl, seedsNb);
 
 % Results with Xl are very close to the one we have with X and we have the
-% same stability of results
+% same stability of results.

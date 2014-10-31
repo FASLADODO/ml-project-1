@@ -10,10 +10,10 @@ function res = compareFeaturesSet(y, X, Xl, nSeeds)
 % removed or transformations applied.
 % nSeeds Number of trials to run
     
-    trErrLS_full = zeros(nSeeds,1);
-    teErrLS_full = zeros(nSeeds,1);
-    trErrLS_light = zeros(nSeeds,1);
-    teErrLS_light = zeros(nSeeds,1);
+    trErr1 = zeros(nSeeds,1);
+    teErr1 = zeros(nSeeds,1);
+    trErr2 = zeros(nSeeds,1);
+    teErr2 = zeros(nSeeds,1);
 
     for i = 1:nSeeds
         seed = i;
@@ -26,26 +26,35 @@ function res = compareFeaturesSet(y, X, Xl, nSeeds)
         tX_test = [ones(length(y_test), 1) X_test];
 
         betaLS_full = leastSquares(y_train, tX);
-        trErrLS_full(i,:) = computeRmse(y_train, tX * betaLS_full);
-        teErrLS_full(i,:) = computeRmse(y_test, tX_test * betaLS_full);
+        trErr1(i,:) = computeRmse(y_train, tX * betaLS_full);
+        teErr1(i,:) = computeRmse(y_test, tX_test * betaLS_full);
 
         % ----- Xl (trial i)
         [Xl_train, yl_train, Xl_test, yl_test] = split(y, Xl, 0.8, seed);
 
         Nl = length(yl_train);
-        tXl = [ones(N, 1) Xl_train];
-        tXl_test = [ones(Nl, 1) Xl_test];
+        tXl = [ones(Nl, 1) Xl_train];
+        tXl_test = [ones(size(Xl_test, 1), 1) Xl_test];
 
         betaLS_light = leastSquares(yl_train, tXl);
-        trErrLS_light(i,:) = computeRmse(yl_train, tXl * betaLS_light);
-        teErrLS_light(i,:) = computeRmse(yl_test, tXl_test * betaLS_light);
+        trErr2(i,:) = computeRmse(yl_train, tXl * betaLS_light);
+        teErr2(i,:) = computeRmse(yl_test, tXl_test * betaLS_light);
         
         % Results of trial i
-        fprintf('Error with least squares: tr %f | te %f  VS tr %f | te %f\n', trErrLS_full(i,:), teErrLS_full(i,:), trErrLS_light(i,:), teErrLS_light(i,:));
+        %fprintf('Error with least squares: tr %f | te %f  VS tr %f | te %f\n', trErr1(i,:), teErr1(i,:), trErr2(i,:), teErr2(i,:));
     end
-
+    
+    % Print average error and variance of the results
+    fprintf('\n----- Results over %d trials\n', nSeeds);
+    fprintf('Average error:\n');
+    fprintf('- X (train): %f, X (test): %f\n', mean(trErr1), mean(teErr1));
+    fprintf('- Xl (train): %f, Xl (test): %f\n', mean(trErr2), mean(teErr2));
+    fprintf('Variance:\n');
+    fprintf('- X (train): %f, X (test): %f\n', var(trErr1), var(teErr1));
+    fprintf('- Xl (train): %f, Xl (test): %f\n', var(trErr2), var(teErr2));
+    
     % Plotting train and test errors over all trials
-    res = [trErrLS_full trErrLS_light teErrLS_full teErrLS_light];
+    res = [trErr1 trErr2 teErr1 teErr2];
     positions = [1 1.25 1.75 2];
 
     boxplot(res, 'notch','on', 'positions', positions);
