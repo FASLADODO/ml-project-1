@@ -13,6 +13,7 @@ X(:,1:35) = normalized(X(:,1:35));
 
 % separate into 2 different dataset according to our 2 hypothetical
 % distributions
+% TODO: learn the separation boundary (classification before regression!)
 [X_m1, y_m1, X_m2, y_m2] = separateDataSet(X, y, 35);
 
 % Normalize the new datasets features
