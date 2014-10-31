@@ -40,10 +40,10 @@ for k = 1:size(X_m1, 2)
     title(['X_{m1}', int2str(k), ' versus y_{m1}']);
 end;
 
-% it does look better. We could have nicer results with a more accurate
+% It does look better. We could have nicer results with a more accurate
 % threshold when separating the dataset
-
-
+% The extra data points for which y is small could be discarded as
+% outliers.
 
 %% Model 2 Visualization
 hist(y_m2);
@@ -65,18 +65,21 @@ for k = 1:size(X_m2, 2)
 end;
 
 
-%% Modele 1 : Compute the correlation between the features
+%% Modele 1: Compute the correlation between the features
 
-correlatedVariables = computeFeaturesCorrelations(X_m1);
+selector = @(x) abs(x) > 0.4;
+correlatedVariables = findCorrelations(selector, X_m1);
 correlatedVariables
 
-% There are very high correlations between some data : ex X25/X26, X13/X8,
-% X16/X2. Even stronger than without separating the dataset which make
-% sense.
+% There are very high correlations between some features,
+% e.g.X25/X26, X13/X8, X16/X2.
+% These correlations are stronger than without separating the dataset,
+% which makes sense.
 
-%% Modele 2 : Compute the correlation between the features
+%% Modele 2: Compute the correlation between the features
 
-correlatedVariables = computeFeaturesCorrelations(X_m2);
-% We obtain the highest correlation coefficients and the corresponding
-% input variables indices
+selector = @(x) abs(x) > 0.4;
+correlatedVariables = findCorrelations(selector, X_m2);
 correlatedVariables
+
+% Here as well we obtain some highly correlated features.

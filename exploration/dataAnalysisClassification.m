@@ -60,16 +60,7 @@ end;
 %% Plotting the features against each other
 % added : class added in color (test for spotting interesting clues)
 figure;
-offset = 0;
-side = 10;
-for i = 1:side
-    for j  = 1:side
-        subplot(side, side, (i - 1) * side + j);
-        plot(X(t, i+offset), X(t, j+offset), '.b'); hold on;
-        plot(X(~t, i+offset), X(~t, j+offset), '.r');
-        title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
-    end;
-end;
+plotFeaturesAgainstFeatures(X, t);
 
 %% Compute the correlation between the features and spot the largest ones
 

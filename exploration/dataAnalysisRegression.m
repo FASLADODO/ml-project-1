@@ -89,19 +89,10 @@ end;
 
 %% Plotting the features against each other
 
-% figure;
-% offset = 0;
-% side = 10;
-% for i = 1:side
-%     for j  = 1:side
-%         subplot(side, side, (i - 1) * side + j);
-%         plot(X(:, i+offset), X(:, j+offset), '.');
-%         title(['X', int2str(i+offset), ' versus X', int2str(j+offset)]);
-%     end;
-% end;
+plotFeaturesAgainstFeatures(X, t);
 
 % We spot some correlations (but not that many).
-% Use ACP for dimensionality reduction?
+% Use PCA for dimensionality reduction?
 
 %% Compute the correlation between the features and spot the largest ones
  

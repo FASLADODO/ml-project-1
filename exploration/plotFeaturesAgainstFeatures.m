@@ -12,7 +12,7 @@ function plotFeaturesAgainstFeatures(X, selector, features)
     end;
     
     disp('Plotting input variables against each other.');
-    disp('Press any key to move on to the next variable.');
+    disp('Press any key to move on to the next variable. Close the figure stop.');
 
     side = ceil(sqrt(d));
     for reference = features
