@@ -12,27 +12,25 @@ y = y_train;
 size(X);
 size(y);
 
-% class selector
-t = y > 0;
-
 % categorical variables : X1, X15, X30 -> move it at the end of the X
 % matrix : now X30, X31, X32 are categorical variables
 X = [X(:,2:14) X(:,16:29) X(:,31:end) X(:,1) X(:,15) X(:,30)];
 
 X(:,1:29) = normalized(X(:,1:29));
 
-% Removing the outliers
-threshold = 10; % outliers are more than 10 standard deviation from the median
-[X y] = removeOutliers(X,y,threshold);
-
-
-
 %% Output Visualization
 hist(y);
 
-% we have 1031 example belonging to class y==1 and 438 examples belonging
+% class selector
+t = y > 0;
+% We have 1052 example belonging to class y==1 and 448 examples belonging
 % to class y==-1. Same as checking :
-size(y(t));
+size(y(t))
+size(y(~t))
+
+%% Removing the outliers
+threshold = 10; % outliers are more than 10 standard deviation from the median
+[X, y] = removeOutliers(X, y, threshold);
 
 %% Input Visualization
 boxplot(X);

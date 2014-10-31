@@ -5,16 +5,17 @@ EPFL's Pattern Classification and Machine Learning first course project
 
 ## TO DO Project 
 
-Basis functions
-X Try ridge regression on several seeds for different degrees and plot + check stability
-- Select a few degrees and do cross validation
+### Basis functions
 
-Features selection
-- Try to continue removing more features + compare stability with different methods and do cool boxplots
-- Try increasing seeds number
+- [X] Try ridge regression on several seeds for different degrees and plot + check stability
+- [ ] Select a few degrees and do cross validation
 
-Ridge Regression Auto
-- Implement cross-validation
+### Features selection
+- [ ] Try to continue removing more features + compare stability with different methods and do cool boxplots
+- [ ] Try increasing seeds number
+
+### Ridge Regression Auto
+- [ ] Implement cross-validation
 
 ## Methods to be implemented
 
