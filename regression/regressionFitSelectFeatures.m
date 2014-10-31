@@ -28,7 +28,7 @@ colorbar;
 
 %% Correlation input/output
 
-selector = @(x) abs(x) < 0.1;
+selector = @(x) abs(x) > 0.4;
 [correlatedVariables, correlations] = findCorrelations(selector, X, y);
 correlatedVariables
 
