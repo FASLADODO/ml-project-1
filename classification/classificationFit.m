@@ -50,3 +50,8 @@ betaPLR = penLogisticRegression(y, tX, alpha, 0.2);
 trErrPLR = computeLogisticRegressionMse(y, tX, betaPLR);
 teErrPLR = computeLogisticRegressionMse(y_test, tX_test, betaPLR);
 fprintf('Error with penalized logistic regression: %f | %f\n', trErrPLR, teErrPLR);
+
+%% Predict test data using the best model
+% TODO
+
+% Export predictions to CSV

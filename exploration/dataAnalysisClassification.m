@@ -34,8 +34,6 @@ threshold = 10; % outliers are more than 10 standard deviation from the median
 t = y > 0;
 
 %% Input Visualization
-boxplot(X);
-
 figure;
 side = 6;
 for k = 1:size(X, 2)
