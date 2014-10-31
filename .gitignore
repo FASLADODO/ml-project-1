@@ -27,4 +27,5 @@
 *.synctex.gz
 *.fdb_latexmk
 
-*.pdf
+# Generated report (but do not ignore figures)
+report/*.pdf
