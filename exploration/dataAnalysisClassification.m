@@ -75,14 +75,8 @@ correlatedVariables
 % Eliminate the features which do not give information
 %% Dummy variables encoding for categorical input variables
 
-Xc = X(:,[30:end]);
-Xnew = [];
-for i = 1:size(Xc,2);
-   Xdummy = dummyvar(Xc(:,i)+1);
-   Xnew = [Xnew Xdummy];
-end
-X = [X(:,[1:29]) Xnew];
-
+categoricalVariables = 30:size(X, 2);
+X = dummyEncoding(X, categoricalVariables);
 imagesc(X); colorbar;
 
 % Now with dummy encoding we have binary variables from X30 to X46
