@@ -6,10 +6,10 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
 % lambdaValues: values to try out as lambda parameters
 
     if(nargin < 3)
-       K = 5; 
+       K = 10; 
     end;
     if(nargin < 4)
-       lambdaValues = logspace(0, 1, 100); 
+       lambdaValues = logspace(-2, 2, 100); 
     end;
 
     n = length(lambdaValues);
