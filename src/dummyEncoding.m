@@ -1,9 +1,9 @@
 function result = dummyEncoding(X, categoricalVariables)
 % Perform dummy encoding of categorical features from X
-% Categorical features are removed from the result and dummy-encoded
-% features are added to the end.
+% Categorical features are removed from X and dummy-encoded
+% features are added to the end forming result
 %
-% categoricalVariables (optionnal) A vector of indices of the categorical features
+% categoricalVariables (optional) A vector of indices of the categorical features
 
     if(nargin < 2)
         categoricalVariables = 1:size(X, 2);
