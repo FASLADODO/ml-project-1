@@ -80,17 +80,11 @@ EPFL \\
   \end{figure}
 
   \subsection{Model separation}
+  From our explorative data analysis phase, we emitted the hypothesis that our dataset could be represented by two distinct models. We checked our intuition by learning a single model on the whole dataset, and compared it with a two-model fit learnt over a roughly split dataset. The test error decreased dramatically when using two models. This motivated us to learn a classifier in order to refine the dataset split.
 
-  \subsection{Feature transformations}
-  - compare different polynomial degrees (box plots, rmse values), selection and validation
-  - use ridge regression because of the resulting matrix singularity\\
+  We chose a threshold on the output value ($y_n > 6200$) and used it to convert $\mathbf{y}$ to a $\{0, 1\}$ label vector. This enabled us to apply logistic regression directly and learn a classifier. We checked the result visually by plotting the two parts of the dataset in different colors.
 
-  \subsection{Regression fit}
-  As we observed, our regression data seems to follow two different models. Therefore we are applying two regression models to fit our data.
-
-  - one-variable model VS least squares VS ridge regression\\
-  - RMSE errors\\
-  - Discussion on overfitting, proportion selection, validation...
+  The first model, denoted $M_1$, is not trivial. On the other hand, the second model, $M_2$, can be described simply with a (high) constant output value.
 
   \subsection{Predictions}
 
