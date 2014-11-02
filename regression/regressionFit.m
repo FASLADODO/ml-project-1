@@ -5,9 +5,8 @@ addpath(genpath('./src'), genpath('../src'));
 clear;
 load('regression.mat');
 
-y_train = normalized(y_train);
-
-% TODO: vary seed to confirm the stability of the results
+% We work with a fixed seed to better understand improvements to our
+% ML methods
 [X, y, X_test, y_test] = split(y_train, X_train, 0.8, 1);
 
 %% Preprocessing
@@ -49,6 +48,4 @@ teErrRR = computeRmse(y_test, tX_test * betaRR);
 fprintf('Error with ridge regression: %f | %f\n', trErrRR, teErrRR);
 
 %% Predict test data using the best model
-% TODO
-
-% Export predictions to CSV
+% @see regressionHybridFit.m
