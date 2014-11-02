@@ -5,23 +5,30 @@ EPFL's Pattern Classification and Machine Learning first course project
 
 ## TO DO Project
 
-### Basis functions
+### Data pre-processing
 
 - [X] Try ridge regression on several seeds for different degrees and plot + check stability
-- [ ] Select a few degrees and do cross validation
-
-### Features selection
-- [ ] Try to continue removing more features + compare stability with different methods and do cool boxplots
+- [X] Select a few degrees and do cross validation. (Selected degree 4 and output cool boxplots)
+- [X] Try removing more features + compare stability with different methods and do cool boxplots. (Didn't seem to help)
 - [ ] Try increasing seeds number
 
-### Ridge Regression Auto
-- [ ] Implement cross-validation
+### ML methods
+- [ ] Implement cross-validation for ridge regression
+- [X] Implement cross-validation for penalized logistic regression
 
 ### Regression dataset
-- [x] Learn a classifier to separate the two data models
+- [X] Learn a classifier to separate the two data models
+- [X] Minimize the train and test error
+- [X] Check the stability of the results
+- [X] Output predictions to CSV
+- [X] Update report with our results
+
+### Classification dataset
+- [ ] Verify / debug automatic penalized logistic regression
 - [ ] Minimize the train and test error
-- [x] Check the stability of the results
-- [x] Output predictions to CSV
+- [ ] Check the stability of the results
+- [ ] Output predictions to CSV
+- [ ] Update report with our results
 
 ## Methods to be implemented
 
