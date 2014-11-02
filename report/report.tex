@@ -86,8 +86,24 @@ EPFL \\
 
   The first model, denoted $M_1$, is not trivial. On the other hand, the second model, $M_2$, can be described simply with a (high) constant output value.
 
-  \subsection{Predictions}
+  \subsection{Feature transformations}
+  In order to describe $M_1$ accurately, we investigated potential feature transformations which would increase the power of expression of our model. We needed to strike a balance between underfitting (purely linear model) and overfitting (high-degree polynomial transformation). To select the degree of polynomial basis expansion, we developed a script which, for each degree:
+  \begin{itemize}
+    \item Applied polynomial basis expansion up to degree $d$
+    \item Created a large number of test / train splits, producing $s$ trials enabling us to validate the stability of our results
+    \item For each trial, select the best $\lambda$ penalization parameter using grid search over a logarithmic range of candidate values
+  \end{itemize}
 
+  We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. From Figure \ref{fig:basisExpansionTestError}, a polynomial expansion of degree 4 provides the best expected test error.
+
+  \begin{figure}[h]
+    \center
+    \includegraphics[width=3in]{figures/regression/basis-extension-test-error.pdf}
+    \caption{}
+    \label{fig:basisExpansionTestError}
+  \end{figure}
+
+  We thus chose to apply polynomial expansion to our subset of inputs $X_{M_1}$. We were careful not to transform the binary variables. We obtain dimensionality $D_{M_1} = 156$ and the capacity to overfit, which is why we applied Ridge Regression next to learn our model parameters.
 
 \section{The classification dataset (D2)}
   We applied many of the same techniques to D2.
