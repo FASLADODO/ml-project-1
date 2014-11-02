@@ -21,7 +21,6 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
     bestErr = -1;
 
     % Split data in k fold (create indices only)
-    setSeed(1);
     N = size(y, 1);
     idx = randperm(N);
     Nk = floor(N/K);
@@ -60,8 +59,6 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
         % all k cross-validation trials
         trainingErr(i) = mean(mseTrSub);
         testErr(i) = mean(mseTeSub);
-
-        size(trainingErr);
         
         % Best beta is the one for which the average CV test error is the least
         if(testErr(i) < bestErr || bestErr < 0)
