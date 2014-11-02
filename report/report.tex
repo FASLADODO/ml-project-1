@@ -38,7 +38,7 @@ EPFL \\
 
 
 \begin{abstract}
-  In this report, we summarize our findings for the project-I. We analyzed two datasets, regression (D1) and classification (D2).
+  In this report, we summarize our findings for the project-I. We analyzed two datasets, regression (D1) and classification (D2). On our regression data, we found the data was following two different models and thus applied either a constant value model or basis functions transformation and ridge regression. On our classification data, we performed binary classification using ...
 \end{abstract}
 
 
@@ -51,14 +51,14 @@ EPFL \\
   We also have test data where we do not observe $\mathbf{y}$. We have $N = 600$ test examples. Our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
-  We start by plotting the distribution of the input to obtain Figure \ref{fig:histY}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data examples, thus we cannot discard them as outliers: we make the hypothesis that our dataset represents two distinct models.
+  We started by plotting the distribution of the output to obtain Figure \ref{fig:histY}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data examples, thus we cannot discard them as outliers: we make the hypothesis that our dataset represents two distinct models.
 
-  Since input variables are not normalized, we center and rescale them before going forward. Plotting each input variable against the output, we notice that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way. To confirm our intuition, we separate points roughly at $X_{35} > 1$ (after normalization) and plot the results in Figure \ref{fig:twoModelsRough}.
+  Since input variables are not normalized, we centered and rescaled them before going forward. Plotting each input variable against the output, we noticed that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way. To confirm our intuition, we separated points roughly at $X_{35} > 1$ (after normalization) and plotted the results in Figure \ref{fig:twoModelsRough}.
 
   We also investigated the correlation first between output and input variables, and then between features themselves. On one hand, variables 35 and 26 are very correlated with the output with correlation coefficients respectively equal to $0.67$ and $0.43$. The results using only those two variables were quite satisfying but not as good as when using all features. On the other hand, a majority of features are not linearly correlated to the output: for 34 of them the correlation coefficient is less than $0.1$. However this does not suggest removal of all these variables yet as a combination of them may well show higher correlation. Some features are highly correlated to each others: 8 pairs of features have a correlation coefficient higher than $0.5$.\\
   Following from these two observations, we tried to remove one feature of each highly correlated pair which is not significantly correlated to the output. Finally we decided to keep the full input matrix $\mathbf{X}$ for our regression fit since we have not faced any rank-deficiency issue and our results were quite satisfying this way.
 
-  We use the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it is linearly dependent from the other ones. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
+  We used the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it is linearly dependent from the other ones. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
 
   \begin{figure}[h]
     \center
@@ -89,9 +89,9 @@ EPFL \\
   \subsection{Feature transformations}
   In order to describe $M_1$ accurately, we investigated potential feature transformations which would increase the power of expression of our model. We needed to strike a balance between underfitting (purely linear model) and overfitting (high-degree polynomial transformation). To select the degree of polynomial basis expansion, we developed a script which, for each degree:
   \begin{itemize}
-    \item Applied polynomial basis expansion up to degree $d$
-    \item Created a large number of test / train splits, producing $s$ trials enabling us to validate the stability of our results
-    \item For each trial, select the best $\lambda$ penalization parameter using grid search over a logarithmic range of candidate values
+    \item Applies polynomial basis expansion up to degree $d$
+    \item Creates a large number of test / train splits, producing $s$ trials enabling us to validate the stability of our results
+    \item For each trial, selects the best $\lambda$ penalization parameter using grid search over a logarithmic range of candidate values. 
   \end{itemize}
 
   We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. From Figure \ref{fig:basisExpansionTestError}, a polynomial expansion of degree 4 provides the best expected test error.
@@ -103,23 +103,23 @@ EPFL \\
     \label{fig:basisExpansionTestError}
   \end{figure}
 
-  We thus chose to apply polynomial expansion to our subset of inputs $X_{M_1}$. We were careful not to transform the binary variables. We obtain dimensionality $D_{M_1} = 156$ and the capacity to overfit, which is why we applied Ridge Regression next to learn our model parameters.
+  We thus chose to apply polynomial expansion to our subset of inputs $X_{M_1}$. We were careful not to transform the binary variables. We obtain dimensionality $D_{M_1} = 156$ and the risk to overfit, which is why we applied Ridge Regression next to learn our model parameters.
 
   \subsection{Regression fit and prediction}
   With the necessary data pre-processing done, we were able to easily learn the parameters for our two models:
   \begin{itemize}
-    \item $M_1$: model parameter vector $\beta$ was learnt using ridge regression with automatic $\lambda$ selection.
+    \item $M_1$: model parameter vector $\beta$ is learnt using ridge regression with automatic $\lambda$ selection. For this, we varied the value of $\lambda$ from 1 to $10^2$ choosing total 100 points between. The final selected lambda equals 43.287.
     \item $M_2$: a constant output value equal to the mean of the outputs from the training observations. We were careful to remove obvious outliers.
   \end{itemize}
 
-  We were finaly able to produce our \textbf{hybrid} predictor, which in order:
+  We were finally able to produce our \textbf{hybrid} predictor, which successively:
   \begin{enumerate}
-    \item Classified any new input using our learnt classifier.
-    \item If the input follows $M_2$, output the learnt constant value.
-    \item Otherwise, apply dummy encoding and basis expansion and output the prediction corresponding to model $M_1$ using our learnt predictor $\beta$.
+    \item Classifies any new input using our learnt classifier.
+    \item If the input follows $M_2$, outputs the learnt constant value.
+    \item Otherwise, applies dummy encoding and basis expansion and outputs the prediction corresponding to model $M_1$ using our learnt predictor $\beta$.
   \end{enumerate}
 
-  We verify the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors over many train / test splits. The average RMSE are summarized in Table \ref{predictorValidation}.
+  We verified the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors over many train / test splits. The average RMSE are summarized in Table \ref{predictorValidation}.
 
   \begin{table}[h]
     \center
@@ -140,7 +140,7 @@ EPFL \\
     \label{predictorValidation}
   \end{table}
 
-  Finaly, we produced our predictions for the given \texttt{X\_test} input vector using the hybrid predictor and wrote them to \texttt{regression-output.csv}.
+  Finally, we produced our predictions for the given \texttt{X\_test} input vector using the hybrid predictor and wrote them in \texttt{regression-output.csv}.
 
 \section{The classification dataset (D2)}
   Much of the intuition and techniques gained from D1 carried over directly to D2. We report the most interesting results below.
@@ -150,7 +150,7 @@ EPFL \\
   Output $\mathbf{y}$ is a binary variable, which implies we are faced with a classification problem. 1052 examples belong to class $C_1$ (for which $y = 0$) and 448 examples belong to $C_2$. Like before, our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
-  We performed data analysis similar to the one used for D1. Spotting outliers on a classification dataset is not an easy task, therefore we have assumed that a data point is an outlier if for any feature it lies more than 10 standard deviations away from the median. This gives us a ``cleaned'' dataset of 1469 examples.
+  We performed data analysis similar to the one used for D1. Spotting outliers on a classification dataset is not an easy task, therefore we have assumed that a data point is an outlier if for any feature it lies more than 10 standard deviations away from the median. This gives us a "cleaned'' dataset of 1469 examples.
 
   For more convenience of manipulation, we moved categorical variables to the last columns of the input matrix and used dummy encoding for each of them. This gives us a total of 46 input variables.
 
@@ -162,10 +162,16 @@ EPFL \\
 
 
 \section{Summary}
+In this report, we analyzed 2 datasets: one regression dataset and one classification dataset. 
+
+In our regression dataset we found that our data was following 2 models. For the most complex model we found ridge regression applied after features transformations with a polynomial function of degree 4 is a reasonable fit. On the simplest model, a constant value returns a good fit. We estimate that the average test error is [TO DO].
+
+In our classification dataset, we had to do binary classification. We found that... We estimate the average test error is [TO DO].
 
 \subsubsection*{Acknowledgments}
   We would like to thank Prof. Emtiyaz Khan and the teaching assistants for creating this project which was a great opportunity for us to put in practice our the Machine Learning techniques seen in class on a serious dataset. We also would like to thank them for their availability during the project.\\
-  Most ML functions and algorithms were based on code examples provided by the teaching team for the exercise sessions. We developped several exploratory and application scripts to make use of these techniques. Several helper functions were provided by Prof. Emtiyaz Khan (CSV output, plot prettifying and output, etc).
+  Most ML functions and algorithms were based on code examples provided by the teaching team for the exercise sessions. We developed several exploratory and application scripts to make use of these techniques. Several helper functions were provided by Prof. Emtiyaz Khan (CSV output, plot prettifying and output, etc).
+  
 \subsubsection*{References}
 
 \end{document}
