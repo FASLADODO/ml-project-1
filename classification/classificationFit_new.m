@@ -26,10 +26,10 @@ threshold = 10; % outliers are more than 10 standard deviation from the median
 tX = [ones(size(X,1), 1) X];
 tX_te = [ones(size(X_te,1), 1) X_te]; 
 y(y < 1) = 0; % changing {-1, 1} to {0, 1}
-alpha = 1e-03; % step size
+alpha = 0.5; % step size
 
 
-K = 2; % CV folds
+K = 5; % CV folds
 % split data in k fold (create indices only)
 setSeed(1);
 N = size(y,1);
@@ -76,5 +76,5 @@ err = err / K
 
 
 % predict using best model
-beta_bestmodel = penLogisticRegressionAuto(y, tX, K);
-pHatn = exp(logSigmoid(tX * beta_bestmodel)); % probability p(y=1|data)
+beta_bestmodel = logisticRegression(y, tX, alpha);
+pHatn = exp(logSigmoid(tX * beta_bestmodel)) % probability p(y=1|data)

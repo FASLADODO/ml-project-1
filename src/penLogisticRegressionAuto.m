@@ -14,7 +14,7 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
 
     n = length(lambdaValues);
     % Step size
-    alpha = 1e-3;
+    alpha = 0.5;
     
     trainingErr = zeros(n, 1);
     testErr = zeros(n, 1);

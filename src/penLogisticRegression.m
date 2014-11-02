@@ -7,14 +7,14 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
     end;
 
 	% Stopping criterion
-	maxIters = 50;
+	maxIters = 100;
 
 	% Initialization
 	beta = zeros(size(tX, 2), 1);
     betaStar = beta;
     
 	% Convergence criterion
-	epsilon = 1e-05;
+	epsilon = 1e-04;
 	k = 0;
     err = -1; bestError = -1;
 	progress = 10;
@@ -39,12 +39,12 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
 		%fprintf('%d| L = %.2f,  beta = [%.2f %.2f %2f]\n', k, err, beta(1), beta(2), beta(3));
 	end;
     
-    %{
+    
     if(k < maxIters)
         fprintf('Newton''s method converged after %d iterations.\n', k);
     else
         fprintf('Newton''s method stopped after %d iterations.\n', k);
     end;
-    %}
+  
 end
 
