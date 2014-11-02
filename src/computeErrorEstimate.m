@@ -1,4 +1,4 @@
-function [RMSE, zero_one, logLoss] = computeErrorEstimate(XTe, yTe, beta)
+function err = computeErrorEstimate(XTe, yTe, beta)
 	[yHat, pHat] = binaryPrediction(XTe, beta);
 
 	% RMSE
@@ -7,7 +7,8 @@ function [RMSE, zero_one, logLoss] = computeErrorEstimate(XTe, yTe, beta)
 	% 0-1 loss
 	zero_one = sum(yTe ~= yHat) / size(yTe, 1);
 	
-
 	% logLoss
 	logLoss = - sum(yTe .* log(pHat) + (1-yTe) .* log(1-pHat)) / size(yTe, 1);
+
+	err = [RMSE zero_one logLoss];
 end

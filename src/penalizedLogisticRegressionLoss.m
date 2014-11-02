@@ -4,12 +4,9 @@ function [err, gradient, hessian] = penalizedLogisticRegressionLoss(y, tX, beta,
     lBeta = lambda * beta;
     lBeta(1) = 0;
     
-
-
     err = err + beta' * lBeta / 2;
     gradient = gradient + lBeta;
     hessian = hessian + lambda;
->>>>>>> cc48804ae04f56eef33999831cb5bfd934a530b8
 end
 
 function [err, gradient, hessian] = logisticRegressionLoss(y, tX, beta)

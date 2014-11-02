@@ -6,7 +6,7 @@ clear;
 load('classification.mat');
 XtoPredict = X_test;
 
-% Relabel -1 to 1 in the output
+% Relabel -1 to 0 in the output
 y_train(y_train < 1) = 0;
 
 % TODO: vary seed to confirm the stability of the results
