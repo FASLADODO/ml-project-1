@@ -13,7 +13,7 @@ EPFL's Pattern Classification and Machine Learning first course project
 - [ ] Try increasing seeds number
 
 ### ML methods
-- [ ] Implement cross-validation for ridge regression
+- [X] Implement cross-validation for ridge regression
 - [X] Implement cross-validation for penalized logistic regression
 
 ### Regression dataset
