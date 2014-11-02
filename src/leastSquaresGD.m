@@ -1,36 +1,28 @@
 function beta = leastSquaresGD(y, tX, alpha)
 % Fit a linear model using Least Squares (using gradient descent)
 % alpha: gradient descent step size
+    maxIters = 10000;
+    % Convergence threshold
+    epsilon = 1e-6;
 
-  % algorithm parametesfor maximum iterations and convergence
-  maxIters = 1000;
-  convergence_th = 0; % convergence threshold
+    % Initialization
+    beta = zeros(size(tX, 2), 1);
+    previousL = 0;
 
-  % initialize
-  beta = zeros(size(tX, 2), 1);
+    % iterate
+    for k = 1:maxIters
+        g = computeGradient(y, tX, beta);
+        L = computeRmse(y, tX * beta);
+        % Update beta (descent rule)
+        beta = beta - alpha * g;
 
-  L_last = 0;
+        % Check for convergence
+        if abs(previousL - L) < epsilon
+            break;
+        end 
 
-  % iterate
-  for k = 1:maxIters
-    % compute gradient 
-    g = computeGradient(y, tX, beta);
-
-    % compute cost
-    L = computeRmse(y, tX * beta);
-
-    % update beta
-    beta = beta - alpha * g;
-
-    % check convergence
-    if abs(L_last - L) < convergence_th
-    	break;
-    end 
-
-    L_last = L;
-
-  end
-
-
-
+        previousL = L;
+    end;
+    
+    %fprintf('Gradient descent stopped after %d iterations.\n', k);
 end
