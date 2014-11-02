@@ -1,9 +1,9 @@
 function prettifyPlot(xLabel, yLabel)
 % Makes the current figure look nice (font size, etc)
-    if(nargin < 3)
+    if(nargin < 2)
         yLabel = '';
     end;
-    if(nargin < 2)
+    if(nargin < 1)
         xLabel = '';
     end;
     
