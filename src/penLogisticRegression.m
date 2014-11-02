@@ -14,7 +14,7 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
     betaStar = beta;
     
 	% Convergence criterion
-	epsilon = 0.00001;
+	epsilon = 1e-05;
 	k = 0;
     err = -1; bestError = -1;
 	progress = 10;

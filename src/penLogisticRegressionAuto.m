@@ -6,7 +6,7 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
 % lambdaValues: values to try out as lambda parameters
 
     if(nargin < 3)
-       K = 10; 
+       K = 5; 
     end;
     if(nargin < 4)
        lambdaValues = logspace(-2, 2, 100); 
@@ -61,25 +61,16 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
         end;
     end;
     
-    % Plot evolution of train and test error with respect to lambda
-    figure;
-    semilogx(lambdaValues, trainingErr, '.-b');
-    hold on;
-    semilogx(lambdaValues, testErr, '.-r');
-    xlabel('Lambda');
-    ylabel('Training (blue) and test (red) error');
+    % % Plot evolution of train and test error with respect to lambda
+    % figure;
+    % semilogx(lambdaValues, trainingErr, '.-b');
+    % hold on;
+    % semilogx(lambdaValues, testErr, '.-r');
+    % xlabel('Lambda');
+    % ylabel('Training (blue) and test (red) error');
 
 end
 
 
 
-function setSeed(seed)
-% set seed
-    global RNDN_STATE  RND_STATE
-    RNDN_STATE = randn('state');
-    randn('state',seed);
-    RND_STATE = rand('state');
-    %rand('state',seed);
-    rand('twister',seed);
-end
 
