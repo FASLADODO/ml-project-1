@@ -6,5 +6,4 @@ function err = computeLogisticRegressionMse(y, tX, beta)
     lSigmoid = logSigmoid(tX * beta);
     logLikelihood = sum(y .* lSigmoid + (1 - y) .* log(1 - exp(lSigmoid)));
     err = - logLikelihood / n;
-
 end

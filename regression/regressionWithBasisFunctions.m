@@ -88,12 +88,12 @@ yLabel = ['RMSE over ', int2str(maxSeeds), ' seeds'];
 figure;
 boxplot(rmseTr, 'notch', 'on');
 title('RMSE (train data) using polynomials basis extension');
-savePlot('./report/figures/basis-extension-train-error.pdf', xLabel, yLabel);
+savePlot('./report/figures/regression/basis-extension-train-error.pdf', xLabel, yLabel);
 
 figure;
 boxplot(rmseTe, 'notch', 'on');
 title('RMSE (test data) using polynomials basis extension')
-savePlot('./report/figures/basis-extension-test-error.pdf', xLabel, yLabel);
+savePlot('./report/figures/regression/basis-extension-test-error.pdf', xLabel, yLabel);
 
 % Polynomial with degree 4 seems the best (almost smallest errors + a very
 % reasonable variance over repetition on different seeds = seems stable)

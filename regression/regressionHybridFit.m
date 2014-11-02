@@ -53,7 +53,7 @@ betaM2(1) = mean(y2);
 % using a ML technique.
 
 % Basis function expansion
-% Allows us to fit a more complex model, but might produce overfitting.
+% It allows us to fit a more complex model, but might produce overfitting.
 % This is why we use ridge regression.
 % We found that polynomials of degree 4 produced the best tradeoff.
 % Warning: do not apply basis extension to binary variables!

@@ -55,27 +55,33 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
             mseTrSub(k) = computeLogisticRegressionMse(yTr, XTr, beta); 
             mseTeSub(k) = computeLogisticRegressionMse(yTe, XTe, beta); 
         end
-    
+        
         % Training and test error for this lambda value is the average over
         % all k cross-validation trials
-        trainingErr(i, :) = mean(mseTrSub);
-        testErr(i, :) = mean(mseTeSub);
+        trainingErr(i) = mean(mseTrSub);
+        testErr(i) = mean(mseTeSub);
 
+        size(trainingErr);
+        
         % Best beta is the one for which the average CV test error is the least
-        if(testErr(i, :) < bestErr || bestErr < 0)
+        if(testErr(i) < bestErr || bestErr < 0)
             betaStar = beta;
             bestErr = testErr(i, :);
         end;
+        
+        % Status
+        %fprintf('Error for lambda = %f: %f | %f\n', lambda, trainingErr(i), testErr(i));
     end;
     
     % Plot evolution of train and test error with respect to lambda
+    %{
     figure;
     semilogx(lambdaValues, trainingErr, '.-b');
     hold on;
     semilogx(lambdaValues, testErr, '.-r');
     xlabel('Lambda');
     ylabel('Training (blue) and test (red) error');
-
+    %}
 end
 
 
