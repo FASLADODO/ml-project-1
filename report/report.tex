@@ -60,23 +60,23 @@ EPFL \\
 
   We use the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it is linearly dependent from the other ones. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
 
-  \begin{figure}[!t]
-  \center
-  \subfigure[Distribution of output $\mathbf{y}$. There are to many values above 6500 to discard them as outliers.]{
-    \includegraphics[width=2.5in]{figures/regression/hist-Y.pdf}
-    \label{fig:histY}
-  }
-  \hfill
-  \subfigure[$X_{35}$ seems to enable us to linearly separate the two models simply]{
-    \includegraphics[width=2.5in]{figures/regression/model-separation-X35.pdf}
-    \label{fig:twoModelsX35}
-  }
-  \hfill
-  \subfigure[First try at separating the two models using $X_{35} > 1$]{
-    \includegraphics[width=4in]{figures/regression/model-separation-rough.pdf}
-    \label{fig:twoModelsRough}
-  }
-  \caption{}
+  \begin{figure}[h]
+    \center
+    \subfigure[Distribution of output $\mathbf{y}$. There are to many values above 6500 to discard them as outliers.]{
+      \includegraphics[width=2.5in]{figures/regression/hist-Y.pdf}
+      \label{fig:histY}
+    }
+    \hfill
+    \subfigure[$X_{35}$ seems to enable us to linearly separate the two models simply]{
+      \includegraphics[width=2.5in]{figures/regression/model-separation-X35.pdf}
+      \label{fig:twoModelsX35}
+    }
+    \hfill
+    \subfigure[First try at separating the two models using $X_{35} > 1$]{
+      \includegraphics[width=4in]{figures/regression/model-separation-rough.pdf}
+      \label{fig:twoModelsRough}
+    }
+    \caption{}
   \end{figure}
 
   \subsection{Model separation}
@@ -153,7 +153,7 @@ We performed basic exploratory data analysis on our data. As expected the data i
 
 For more convenience in the features manipulation, categorical variables are moved to the last columns of the matrix and we use dummy encoding for each of them. This gives us a total of 46 input variables.
 
-  \subsection{Regression fit}
+  \subsection{Logistic regression fit}
 
   \subsection{Feature transformations}
 
@@ -164,8 +164,8 @@ For more convenience in the features manipulation, categorical variables are mov
 \section{Summary}
 
 \subsubsection*{Acknowledgments}
-  We would like to thank Emtiyaz Khan and the teaching assistants for creating this project which was a great opportunity for us to put in practice our knowledge of Machine Learning on a full study-case. We also would like to thank them for their precious advices during the project.\\
-  Most ML functions and algorithms were based on code examples provided by the teaching team for the exercise sessions. We developped several exploratory and application scripts to make use of these techniques.
+  We would like to thank Prof. Emtiyaz Khan and the teaching assistants for creating this project which was a great opportunity for us to put in practice our the Machine Learning techniques seen in class on a serious dataset. We also would like to thank them for their availability during the project.\\
+  Most ML functions and algorithms were based on code examples provided by the teaching team for the exercise sessions. We developped several exploratory and application scripts to make use of these techniques. Several helper functions were provided by Prof. Emtiyaz Khan (CSV output, plot prettifying and output, etc).
 \subsubsection*{References}
 
 \end{document}
