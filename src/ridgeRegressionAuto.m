@@ -9,7 +9,7 @@ function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, proportio
         proportion = 0.8;
     end;
     if(nargin < 4)
-       k = 5; 
+       k = 5;
     end;
     if(nargin < 5)
        lambdaValues = logspace(-2, 2, 100); 

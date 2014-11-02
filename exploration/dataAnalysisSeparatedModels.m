@@ -13,8 +13,7 @@ X(:,1:35) = normalized(X(:,1:35));
 
 % separate into 2 different dataset according to our 2 hypothetical
 % distributions
-% TODO: learn the separation boundary (classification before regression!)
-[X_m1, y_m1, X_m2, y_m2] = separateDataSet(X, y, 35);
+[betaClassify, X_m1, y_m1, X_m2, y_m2] = separateDataSet(y, X, 6200);
 
 % Normalize the new datasets features
 X_m1(:,1:35) = normalized(X_m1(:,1:35));
@@ -22,7 +21,9 @@ X_m2(:,1:35) = normalized(X_m2(:,1:35));
 
 
 %% Model 1 Visualization
+figure;
 hist(y_m1);
+title('Repartition of y_{m1}');
 
 figure;
 side = 7;
@@ -46,7 +47,9 @@ end;
 % outliers.
 
 %% Model 2 Visualization
+figure;
 hist(y_m2);
+title('Repartition of y_{m2}');
 
 figure;
 side = 7;

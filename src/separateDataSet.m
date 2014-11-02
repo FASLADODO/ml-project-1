@@ -3,9 +3,9 @@ function [beta, tX1, y1, tX2, y2] = separateDataSet(y, tX, threshold)
 % we try and learn a classifier on the input tX to distinguish between the
 % two. We use the given threshold on the output value to create the two
 % classes.
-    c1 = (y > threshold);
+    c2 = (y > threshold);
     binary = false(size(y));
-    binary(c1) = true();
+    binary(c2) = true();
     
     beta = logisticRegression(binary, tX);
     yPredicted = binaryPrediction(tX, beta);
@@ -18,6 +18,7 @@ function [beta, tX1, y1, tX2, y2] = separateDataSet(y, tX, threshold)
     y2 = y(~c1);
     
     % Check the validity of the classifier visually
+    %{
     figure;
     for i = 1:25
         subplot(5, 5, i);
@@ -25,4 +26,5 @@ function [beta, tX1, y1, tX2, y2] = separateDataSet(y, tX, threshold)
         plot(tX1, y1, '.b');
         plot(tX2, y2, '.r');
     end;
+    %}
 end

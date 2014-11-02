@@ -3,7 +3,7 @@ ml-project-1
 
 EPFL's Pattern Classification and Machine Learning first course project
 
-## TO DO Project 
+## TO DO Project
 
 ### Basis functions
 
@@ -16,6 +16,12 @@ EPFL's Pattern Classification and Machine Learning first course project
 
 ### Ridge Regression Auto
 - [ ] Implement cross-validation
+
+### Regression dataset
+- [x] Learn a classifier to separate the two data models
+- [ ] Minimize the train and test error
+- [x] Check the stability of the results
+- [x] Output predictions to CSV
 
 ## Methods to be implemented
 
