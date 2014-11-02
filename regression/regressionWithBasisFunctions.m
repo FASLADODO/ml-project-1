@@ -15,8 +15,8 @@ size(y);
 
 % Normalize the features except discrete ones
 X(:,1:35) = normalized(X(:,1:35));
-%X = [X(:,1:12) X(:,15) X(:,17) X(:,19:24) X(:,26) X(:,28) X(:,30:end)]; %
-%results seems nice but ridge reg graphes are little bit less impressives
+%X = [X(:,1:12) X(:,15) X(:,17) X(:,19:24) X(:,26) X(:,28) X(:,30:end)];
+% results seems nice but ridge reg graphes are little bit less impressives
 %X = [X(:,26) X(:,35)];
 
 
@@ -85,16 +85,19 @@ for degree = 1:length(degrees);
 end
 
 %% Boxplots on different polynomials to visualize above printed results
+xLabel = 'Degree of polynomial basis extension';
+yLabel = ['RMSE over ', int2str(maxSeeds), ' seeds'];
+
 figure;
 boxplot(rmseTr, 'notch', 'on');
-ylabel(['RMSE over ', int2str(maxSeeds) ' seeds']);
-title(sprintf('RMSE on Train data on polynomials up to %d degrees',maxDegree))
+title('RMSE (train data) using polynomials basis extension');
+savePlot('./report/figures/basis-extension-train-error.pdf', xLabel, yLabel);
 
 figure;
 boxplot(rmseTe, 'notch', 'on');
-ylabel(['RMSE over ', int2str(maxSeeds) ' seeds']);
-title(sprintf('RMSE on Test data on polynomials up to %d degrees',maxDegree))
+title('RMSE (test data) using polynomials basis extension')
+savePlot('./report/figures/basis-extension-test-error.pdf', xLabel, yLabel);
 
 % Polynomial with degree 4 seems the best (almost smallest errors + a very
 % reasonable variance over repetition on different seeds = seems stable)
-% TO DO next : validation with CV
+% TODO: validation with CV
