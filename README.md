@@ -10,7 +10,7 @@ EPFL's Pattern Classification and Machine Learning first course project
 - [X] Try ridge regression on several seeds for different degrees and plot + check stability
 - [X] Select a few degrees and do cross validation. (Selected degree 4 and output cool boxplots)
 - [X] Try removing more features + compare stability with different methods and do cool boxplots. (Didn't seem to help)
-- [ ] Try increasing seeds number
+- [X] Try increasing seeds number
 
 ### ML methods
 - [ ] Implement cross-validation for ridge regression
