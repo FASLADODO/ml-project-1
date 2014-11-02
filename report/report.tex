@@ -105,6 +105,43 @@ EPFL \\
 
   We thus chose to apply polynomial expansion to our subset of inputs $X_{M_1}$. We were careful not to transform the binary variables. We obtain dimensionality $D_{M_1} = 156$ and the capacity to overfit, which is why we applied Ridge Regression next to learn our model parameters.
 
+  \subsection{Regression fit and prediction}
+  With the necessary data pre-processing done, we were able to easily learn the parameters for our two models:
+  \begin{itemize}
+    \item $M_1$: model parameter vector $\beta$ was learnt using ridge regression with automatic $\lambda$ selection.
+    \item $M_2$: a constant output value equal to the mean of the outputs from the training observations. We were careful to remove obvious outliers.
+  \end{itemize}
+
+  We were finaly able to produce our \textbf{hybrid} predictor, which in order:
+  \begin{enumerate}
+    \item Classified any new input using our learnt classifier.
+    \item If the input follows $M_2$, output the learnt constant value.
+    \item Otherwise, apply dummy encoding and basis expansion and output the prediction corresponding to model $M_1$ using our learnt predictor $\beta$.
+  \end{enumerate}
+
+  We verify the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors over many train / test splits. The average RMSE are summarized in Table \ref{predictorValidation}.
+
+  \begin{table}[h]
+    \center
+    \begin{tabular}{|r|c|c|}
+      \hline
+                                              & Train RMSE & Test RMSE \\
+      \hline
+      Constant output over the whole dataset  & 1.006680   & 0.971525 \\
+      \hline
+      Least squares over the whole dataset    & 0.512306   & 0.531639 \\
+      \hline
+      Ridge regression over the whole dataset & 0.523865   & 0.526744 \\
+      \hline
+      Hybrid predictor                        & 0.320812   & 0.347088 \\
+      \hline
+    \end{tabular}
+    \caption{Validation of our prediction by comparison with simpler models over many train / test splits}
+    \label{predictorValidation}
+  \end{table}
+
+  Finaly, we produced our predictions for the given \texttt{X\_test} input vector using the hybrid predictor and wrote them to \texttt{regression-output.csv}.
+
 \section{The classification dataset (D2)}
   We applied many of the same techniques to D2.
 
