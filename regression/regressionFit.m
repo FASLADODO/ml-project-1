@@ -36,12 +36,11 @@ teErrLS = computeRmse(y_test, tX_test * betaLS);
 fprintf('Error with least squares: %f | %f\n', trErrLS, teErrLS);
 
 %% Train a linear model using ridge regression
-proportion = 0.5; % Train / test split
-k = 5; % k-fold cross validation
+k = 10; % k-fold cross validation
 lambdas = logspace(0, 2, 100);
 % We leave X_test and y_test out of the learning process of ridge
 % regression to be able to test its results on truly fresh data
-betaRR = ridgeRegressionAuto(y, tX, proportion, k, lambdas);
+betaRR = ridgeRegressionAuto(y, tX, k, lambdas);
 
 trErrRR = computeRmse(y, tX * betaRR);
 teErrRR = computeRmse(y_test, tX_test * betaRR);

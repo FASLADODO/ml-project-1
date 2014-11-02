@@ -63,10 +63,9 @@ betaM2(1) = mean(y2);
 % the time of prediction.
 tX1 = [ones(size(tX1, 1), 1) createPoly(tX1(:, 2:36), 4) tX1(:, 37:end)];
 
-proportion = 0.5; % Train / test split
 k = 5; % k-fold cross validation
 lambdas = logspace(0, 2, 100);
-betaM1 = ridgeRegressionAuto(y1, tX1, proportion, k, lambdas);
+betaM1 = ridgeRegressionAuto(y1, tX1, k, lambdas);
 
 %% Constitute the best predictor
 % Two steps: classify to select the model, then apply the necessary transformation
@@ -76,7 +75,7 @@ predictor = @(tX) hybridPredictor(tX, betaClassifier, betaM1, betaM2);
 
 trErrHybrid = computeRmse(y, predictor(tX));
 teErrHybrid = computeRmse(y_test, predictor(tX_test));
-fprintf('Error with the joint classifier: %f | %f\n', trErrHybrid, teErrHybrid);
+fprintf('Error with the hybrid predictor: %f | %f\n', trErrHybrid, teErrHybrid);
 
 %% Predict test data using the best model
 
