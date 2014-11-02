@@ -15,7 +15,7 @@ function [err, gradient, hessian] = logisticRegressionLoss(y, tX, beta)
     
     sigmoid = exp(logSigmoid(tX * beta));
     S = diag(sigmoid .* (1 - sigmoid));
-    hessian = tX' * S * tX;
+    hessian = tX' * S * tX / size(y,1);
 end
 
 function g = computeLogisticRegressionGradient(y, tX, beta)
