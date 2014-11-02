@@ -143,22 +143,22 @@ EPFL \\
   Finally, we produced our predictions for the given \texttt{X\_test} input vector using the hybrid predictor and wrote them in \texttt{regression-output.csv}.
 
 \section{The classification dataset (D2)}
-  We applied many of the same techniques to D2.
+  Much of the intuition and techniques gained from D1 carried over directly to D2. We report the most interesting results below.
 
   \subsection{Dataset description}
-  This dataset has $N = 1500$ data examples with dimensionality $D = 32$, as well as $N' = 1500$ test examples. Out of these 32 features, 29 are real-valued and 3 are categorical. Output $\mathbf{y}$ is a binary variable, which implies we are faced with a classification problem. 1052 examples belong to class $C_1$ (for which $y = 0$) and 448 examples belong to $C_2$. Like before, our goal is to produce predictions for test examples, as well as an approximation of the test error.
+  This dataset has $N = 1500$ data examples with dimensionality $D = 32$, as well as $N' = 1500$ test examples. Out of these 32 features, 29 are real-valued and 3 are categorical.\\
+  Output $\mathbf{y}$ is a binary variable, which implies we are faced with a classification problem. 1052 examples belong to class $C_1$ (for which $y = 0$) and 448 examples belong to $C_2$. Like before, our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
-We performed basic exploratory data analysis on our data. As expected the data is not centered, and therefore we normalized the data. Spotting outliers on a classification dataset is not an easy role, we have assumed that data points are outliers if for any feature they are more than 10 standard deviations away from the median. This gives us a cleaned data set of 1469 examples.
+  We performed data analysis similar to the one used for D1. Spotting outliers on a classification dataset is not an easy task, therefore we have assumed that a data point is an outlier if for any feature it lies more than 10 standard deviations away from the median. This gives us a "cleaned'' dataset of 1469 examples.
 
-For more convenience in the features manipulation, categorical variables are moved to the last columns of the matrix and we use dummy encoding for each of them. This gives us a total of 46 input variables.
+  For more convenience of manipulation, we moved categorical variables to the last columns of the input matrix and used dummy encoding for each of them. This gives us a total of 46 input variables.
 
   \subsection{Logistic regression fit}
 
   \subsection{Feature transformations}
 
   \subsection{Predictions}
-
 
 
 \section{Summary}

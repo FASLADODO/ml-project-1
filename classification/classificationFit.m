@@ -4,6 +4,7 @@ addpath(genpath('./src'), genpath('../src'));
 
 clear;
 load('classification.mat');
+XtoPredict = X_test;
 
 % Relabel -1 to 1 in the output
 y_train(y_train < 1) = 0;
@@ -16,17 +17,25 @@ y_train(y_train < 1) = 0;
 categoricalVariables = [1 15 30];
 X = dummyEncoding(X, categoricalVariables);
 X_test = dummyEncoding(X_test, categoricalVariables);
+XtoPredict = dummyEncoding(XtoPredict, categoricalVariables);
 
 % Normalize features (except the discrete ones)
-[X(:,1:29), X_test(:,1:29)] = normalized(X(:,1:29), X_test(:,1:29));
+notNormalized = X(:,1:29);
+[X(:,1:29), X_test(:,1:29)] = normalized(notNormalized, X_test(:,1:29));
+[~, XtoPredict(:,1:29)] = normalized(notNormalized, XtoPredict(:,1:29));
+clear notNormalized;
 
 % Removing the outliers
 threshold = 10; % outliers are more than 10 standard deviation from the median
 [X, y] = removeOutliers(X, y, threshold);
 
-N = length(y);
-tX = [ones(N, 1) X];
+% Basis function expansion
+% We found that polynomials of degree ??? produced the best tradeoff.
+tX = [ones(length(y), 1) X];
 tX_test = [ones(length(y_test), 1) X_test];
+% TODO
+%tX = [ones(length(y), 1) createPoly(X(:, 1:29), 4) X(:, 30:end)];
+%tX_test = [ones(length(y_test), 1) createPoly(X_test(:, 1:29), 4) X_test(:, 30:end)];
 
 %% Get a baseline for the cost by fitting a one-variable model
 beta0 = mean(y);
