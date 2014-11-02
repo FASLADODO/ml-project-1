@@ -29,3 +29,5 @@
 
 # Generated report (but do not ignore figures)
 report/*.pdf
+
+report/sample-report/paper-marked.pdf
