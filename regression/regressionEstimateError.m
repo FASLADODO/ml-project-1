@@ -38,12 +38,15 @@ fprintf('Estimated error with least squares: %f | %f\n', trErrLS, teErrLS);
 %% Train a linear model using ridge regression
 % Note that ridge regression uses its own cross validation to select lambda
 lambdas = logspace(0, 2, 100);
-learnRidgeRegression = @(y, tX) ridgeRegressionAuto(y, tX, 10, lambdas);
+learnRidgeRegression = @(y, tX) ridgeRegressionAuto(y, tX, 5, lambdas);
 [trErrRR, teErrRR] = kFoldCrossValidation(y, tX, K, learnRidgeRegression, predictLinear, computeError);
 fprintf('Estimated error with ridge regression: %f | %f\n', trErrRR, teErrRR);
 
 %% Train a linear model using basis extension and ridge regression
-% TODO
+% Polynomial basis extension (only the real-valued variables)
+tXExtended = [ones(size(tX, 1), 1) createPoly(tX(:, 2:36), 4) tX(:, 37:end)];
+[trErrPRR, teErrPRR] = kFoldCrossValidation(y, tXExtended, K, learnRidgeRegression, predictLinear, computeError);
+fprintf('Estimated error with polynomial basis extension and ridge regression : %f | %f\n', trErrPRR, teErrPRR);
 
 %% Predict test data using the best model
 % @see regressionHybridFit.m
