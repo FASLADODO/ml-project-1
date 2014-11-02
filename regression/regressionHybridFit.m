@@ -29,7 +29,7 @@ N = length(y);
 tX = [ones(N, 1) X];
 tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
 
-%% Constitute the best predictor
+%% Constitute the best predictor and estimate its test error
 
 % The threshold was chosen from observation of the output data
 threshold = 6200;
@@ -39,11 +39,12 @@ predict = @(tX, betas) hybridPredictor(tX, betas{1}, betas{2}, betas{3});
 [trErrHybrid, teErrHybrid] = kFoldCrossValidation(y, tX, K, learn, predict, @computeRmse);
 fprintf('Error with the hybrid predictor: %f | %f\n', trErrHybrid, teErrHybrid);
 
-%% Predict test data using the best model
-
-% TODO: get best beta
-yPredicted = predict(tXtoPredict);
+%% Predict test data using the best predictor
+% Now that we're confident about the validity of our approach, we can use
+% the whole training dataset to learn the best possible classifier
+bestBeta = learn(y, tX);
+yHat = predict(tXtoPredict, bestBeta);
 
 path = './data/regression-output.csv';
-writeCsv(yPredicted, path);
+writeCsv(yHat, path);
 disp(['Predictions output to ', path]);
