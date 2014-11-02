@@ -5,6 +5,9 @@ addpath(genpath('./src'), genpath('../src'));
 clear;
 load('classification.mat');
 
+% Relabel -1 to 1 in the output
+y_train(y_train < 1) = 0;
+
 % TODO: vary seed to confirm the stability of the results
 [X, y, X_test, y_test] = split(y_train, X_train, 0.8, 1);
 
@@ -16,6 +19,10 @@ X_test = dummyEncoding(X_test, categoricalVariables);
 
 % Normalize features (except the discrete ones)
 [X(:,1:29), X_test(:,1:29)] = normalized(X(:,1:29), X_test(:,1:29));
+
+% Removing the outliers
+threshold = 10; % outliers are more than 10 standard deviation from the median
+[X, y] = removeOutliers(X, y, threshold);
 
 N = length(y);
 tX = [ones(N, 1) X];
@@ -53,5 +60,7 @@ fprintf('Error with penalized logistic regression: %f | %f\n', trErrPLR, teErrPL
 
 %% Predict test data using the best model
 % TODO
+
+% TODO: don't forget to relabel 0 to -1 in the output
 
 % Export predictions to CSV
