@@ -4,7 +4,7 @@ addpath(genpath('./src'), genpath('../src'));
 
 clear;
 load('regression.mat');
-% Our goal is to output values for this input
+% Our goal is to predict values for this input
 XtoPredict = X_test;
 
 % We change the seed (and thus the train / test split)

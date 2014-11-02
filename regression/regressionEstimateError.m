@@ -35,6 +35,12 @@ fprintf('Estimated error with a 1-parameter model: %f | %f\n', trErr0, teErr0);
 [trErrLS, teErrLS] = kFoldCrossValidation(y, tX, K, @leastSquares, predictLinear, computeError);
 fprintf('Estimated error with least squares: %f | %f\n', trErrLS, teErrLS);
 
+%% Train a linear model using simple least squares with gradient descent
+alpha = 0.1; % Step size
+learnLeastSquares = @(y, tX) leastSquaresGD(y, tX, alpha);
+[trErrLSGD, teErrLSGD] = kFoldCrossValidation(y, tX, K, learnLeastSquares, predictLinear, computeError);
+fprintf('Estimated error with least squares (gradient descent): %f | %f\n', trErrLSGD, teErrLSGD);
+
 %% Train a linear model using ridge regression
 % Note that ridge regression uses its own cross validation to select lambda
 lambdas = logspace(0, 2, 100);
