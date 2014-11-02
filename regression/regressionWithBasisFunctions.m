@@ -13,8 +13,8 @@ N = length(y);
 size(X);
 size(y);
 
-% Normalize the features except discrete ones
-X(:,1:35) = normalized(X(:,1:35));
+% We ignore the categorical features in this analysis
+X = normalized(X(:,1:35));
 %X = [X(:,1:12) X(:,15) X(:,17) X(:,19:24) X(:,26) X(:,28) X(:,30:end)];
 % results seems nice but ridge reg graphes are little bit less impressives
 %X = [X(:,26) X(:,35)];
@@ -44,9 +44,6 @@ for degree = 1:length(degrees);
         % form tX
         tXTr = [ones(length(yTr), 1) createPoly(XTr, degree)];
         tXTe = [ones(length(yTe), 1) createPoly(XTe, degree)];
-
-        % least squares
-        %beta = leastSquares(yTr, tXTr);
 
         % ridge regression
         k = 5; % k-fold cross validation
