@@ -13,61 +13,68 @@ function [betaStar, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, 
     end;
 
     n = length(lambdaValues);
-    alpha = 1e-3; % Step size
+    % Step size
+    alpha = 1e-3;
     
     trainingErr = zeros(n, 1);
     testErr = zeros(n, 1);
     bestErr = -1;
 
-    % split data in k fold (create indices only)
+    % Split data in k fold (create indices only)
     setSeed(1);
-    N = size(y,1);
+    N = size(y, 1);
     idx = randperm(N);
     Nk = floor(N/K);
+    cvIndices = zeros(K, Nk);
     for k = 1:K
-        idxCV(k,:) = idx(1+(k-1)*Nk:k*Nk);
+        cvIndices(k, :) = idx( (1 + (k-1)*Nk):(k * Nk) );
     end
     
-    % tryout all lambda values
+    % Tryout all lambda values
+    % For each value, we train with Ridge Regression using cross validation
     for i = 1:n
         lambda = lambdaValues(i);
         
         % k-fold cross-validation
+        mseTrSub = zeros(K, 1);
+        mseTeSub = mseTrSub;
         for k = 1:K
-            % get k'th subgroup in test, others in train
-            idxTe = idxCV(k,:);
-            idxTr = idxCV([1:k-1 k+1:end],:);
-            idxTr = idxTr(:);
+            % Get k'th subgroup in test, others in train
+            idxTe = cvIndices(k, :);
+            idxTr = cvIndices([1:k-1 k+1:end], :);
+            idxTr = reshape(idxTr, numel(idxTr), 1);
             yTe = y(idxTe);
-            XTe = tX(idxTe,:);
+            XTe = tX(idxTe, :);
             yTr = y(idxTr);
-            XTr = tX(idxTr,:);
+            XTr = tX(idxTr, :);
 
-            % train beta on training data 
+            % Train beta
             beta = penLogisticRegression(yTr, XTr, alpha, lambda);
 
-            % compute training and test MSE
+            % Compute training and test error for k'th train / test split
             mseTrSub(k) = computeLogisticRegressionMse(yTr, XTr, beta); 
             mseTeSub(k) = computeLogisticRegressionMse(yTe, XTe, beta); 
-
         end
-
+    
+        % Training and test error for this lambda value is the average over
+        % all k cross-validation trials
         trainingErr(i, :) = mean(mseTrSub);
         testErr(i, :) = mean(mseTeSub);
 
-        if(testErr(i, :) < bestErr || bestErr < 0) % best beta is the one for which the test error is the least
+        % Best beta is the one for which the average CV test error is the least
+        if(testErr(i, :) < bestErr || bestErr < 0)
             betaStar = beta;
             bestErr = testErr(i, :);
         end;
     end;
     
-    % % Plot evolution of train and test error with respect to lambda
-    % figure;
-    % semilogx(lambdaValues, trainingErr, '.-b');
-    % hold on;
-    % semilogx(lambdaValues, testErr, '.-r');
-    % xlabel('Lambda');
-    % ylabel('Training (blue) and test (red) error');
+    % Plot evolution of train and test error with respect to lambda
+    figure;
+    semilogx(lambdaValues, trainingErr, '.-b');
+    hold on;
+    semilogx(lambdaValues, testErr, '.-r');
+    xlabel('Lambda');
+    ylabel('Training (blue) and test (red) error');
 
 end
 

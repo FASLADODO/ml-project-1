@@ -43,9 +43,9 @@ teErrLR = computeLogisticRegressionMse(y_test, tX_test, betaLR);
 fprintf('Error with logistic regression: %f | %f\n', trErrLR, teErrLR);
 
 %% Train a linear model using penalized logistic regression
-alpha = 0.5;
-lmabda = 0.1; % TODO: auto-learn lambda
-betaPLR = penLogisticRegression(y, tX, alpha, 0.2);
+k = 5; % k-fold cross validation
+lambdas = logspace(0, 4, 50);
+betaPLR = penLogisticRegressionAuto(y, tX, k, lambdas);
 
 trErrPLR = computeLogisticRegressionMse(y, tX, betaPLR);
 teErrPLR = computeLogisticRegressionMse(y_test, tX_test, betaPLR);
