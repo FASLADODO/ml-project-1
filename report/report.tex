@@ -51,13 +51,14 @@ EPFL \\
   We also have test data where we do not observe $\mathbf{y}$. We have $N = 600$ test examples. Our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
-  We start by plotting the distribution of the input to obtain Figure \ref{fig:histY}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data example, thus they cannot be discarded as outliers: we make the hypothesis that our dataset includes two models.
+  We start by plotting the distribution of the input to obtain Figure \ref{fig:histY}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data examples, thus we cannot discard them as outliers: we make the hypothesis that our dataset represents two distinct models.
 
-  Since input variables are not normalized, we center and rescale them before going forward. Plotting each input variable against the output, we notice that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way, as we could have hoped. We separate points roughly at $X_{35} > 1$ (after normalization) and plot the results in Figure \ref{fig:twoModelsRough}.
+  Since input variables are not normalized, we center and rescale them before going forward. Plotting each input variable against the output, we notice that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way. To confirm our intuition, we separate points roughly at $X_{35} > 1$ (after normalization) and plot the results in Figure \ref{fig:twoModelsRough}.
 
-  We also investigated the correlation first between output and input variables and then between features themselves. On one hand, the variables  35 and 26 are very correlated to the output with correlation coefficients respectively equals to 0.67 and 0.43. The results using only those two variables were quite satisfying but not sufficient as too many features are put aside. On the other hand, a majority of features are almost uncorrelated to the output: for 34 of them the correlation coefficient is less than 0.1. However this does not suggest removal of all these variables yet as a combination of them might have a higher correlation to the output. Some features are highly correlated to each others: 8 pairs of features have a correlation coefficient higher than 0.5. From these two observations on regression between features and with the output, we tried to remove one feature of each highly correlated pairs which is not significantly correlated to the output. We finally kept the full input matrix  $\mathbf{X}$ for our regression fit as we have not faced any rank-deficiency issue and our results were satisfying keeping all the features.
+  We also investigated the correlation first between output and input variables, and then between features themselves. On one hand, variables 35 and 26 are very correlated with the output with correlation coefficients respectively equal to $0.67$ and $0.43$. The results using only those two variables were quite satisfying but not as good as when using all features. On the other hand, a majority of features are not linearly correlated to the output: for 34 of them the correlation coefficient is less than $0.1$. However this does not suggest removal of all these variables yet as a combination of them may well show higher correlation. Some features are highly correlated to each others: 8 pairs of features have a correlation coefficient higher than $0.5$.\\
+  Following from these two observations, we tried to remove one feature of each highly correlated pair which is not significantly correlated to the output. Finally we decided to keep the full input matrix $\mathbf{X}$ for our regression fit since we have not faced any rank-deficiency issue and our results were quite satisfying this way.
 
-  We use a dummy encoding for the categorical variables. The binary variables do not require dummy encoding. This gives us a total of 50 input variables.
+  We use the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it is linearly dependent from the other ones. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
 
   \begin{figure}[!t]
   \center
@@ -68,7 +69,7 @@ EPFL \\
   \hfill
   \subfigure[$X_{35}$ seems to enable us to linearly separate the two models simply]{
     \includegraphics[width=2.5in]{figures/regression/model-separation-X35.pdf}
-    \label{fig:twoModelsRough}
+    \label{fig:twoModelsX35}
   }
   \hfill
   \subfigure[First try at separating the two models using $X_{35} > 1$]{
@@ -78,6 +79,11 @@ EPFL \\
   \caption{}
   \end{figure}
 
+  \subsection{Model separation}
+
+  \subsection{Feature transformations}
+  - compare different polynomial degrees (box plots, rmse values), selection and validation
+  - use ridge regression because of the resulting matrix singularity\\
 
   \subsection{Regression fit}
   As we observed, our regression data seems to follow two different models. Therefore we are applying two regression models to fit our data.
@@ -86,12 +92,7 @@ EPFL \\
   - RMSE errors\\
   - Discussion on overfitting, proportion selection, validation...
 
-  \subsection{Feature transformations}
-  - use ridge regression because of the resulting matrix singularity\\
-  - compare different polynomial degrees (box plots, rmse values), selection and validation
-
   \subsection{Predictions}
-
 
 
 \section{The classification dataset (D2)}
