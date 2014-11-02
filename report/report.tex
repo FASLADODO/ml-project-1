@@ -38,7 +38,7 @@ EPFL \\
 
 
 \begin{abstract}
-  In this report, we summarize our findings for the project-I. We analyzed two datasets, regression (D1) and classification (D2). 
+  In this report, we summarize our findings for the project-I. We analyzed two datasets, regression (D1) and classification (D2).
 \end{abstract}
 
 
@@ -54,9 +54,9 @@ EPFL \\
   We start by plotting the distribution of the input to obtain Figure \ref{fig:histY}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data example, thus they cannot be discarded as outliers: we make the hypothesis that our dataset includes two models.
 
   Since input variables are not normalized, we center and rescale them before going forward. Plotting each input variable against the output, we notice that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way, as we could have hoped. We separate points roughly at $X_{35} > 1$ (after normalization) and plot the results in Figure \ref{fig:twoModelsRough}.
-  
+
   We also investigated the correlation first between output and input variables and then between features themselves. On one hand, the variables  35 and 26 are very correlated to the output with correlation coefficients respectively equals to 0.67 and 0.43. The results using only those two variables were quite satisfying but not sufficient as too many features are put aside. On the other hand, a majority of features are almost uncorrelated to the output: for 34 of them the correlation coefficient is less than 0.1. However this does not suggest removal of all these variables yet as a combination of them might have a higher correlation to the output. Some features are highly correlated to each others: 8 pairs of features have a correlation coefficient higher than 0.5. From these two observations on regression between features and with the output, we tried to remove one feature of each highly correlated pairs which is not significantly correlated to the output. We finally kept the full input matrix  $\mathbf{X}$ for our regression fit as we have not faced any rank-deficiency issue and our results were satisfying keeping all the features.
-  
+
   We use a dummy encoding for the categorical variables. The binary variables do not require dummy encoding. This gives us a total of 50 input variables.
 
   \begin{figure}[!t]
@@ -81,7 +81,7 @@ EPFL \\
 
   \subsection{Regression fit}
   As we observed, our regression data seems to follow two different models. Therefore we are applying two regression models to fit our data.
-  
+
   - one-variable model VS least squares VS ridge regression\\
   - RMSE errors\\
   - Discussion on overfitting, proportion selection, validation...
@@ -116,8 +116,8 @@ For more convenience in the features manipulation, categorical variables are mov
 \section{Summary}
 
 \subsubsection*{Acknowledgments}
- We would like to thank Emtiyaz Khan and the teaching assistants for creating this project which was a great opportunity for us to put in practice our knowledge of Machine Learning on a full study-case. We also would like to thank them for their precious advices during the project.
- 
+  We would like to thank Emtiyaz Khan and the teaching assistants for creating this project which was a great opportunity for us to put in practice our knowledge of Machine Learning on a full study-case. We also would like to thank them for their precious advices during the project.\\
+  Most ML functions and algorithms were based on code examples provided by the teaching team for the exercise sessions. We developped several exploratory and application scripts to make use of these techniques.
 \subsubsection*{References}
 
 \end{document}
