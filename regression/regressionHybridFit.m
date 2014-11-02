@@ -38,6 +38,11 @@ tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
 
 [betaClassifier, tX1, y1, tX2, y2] = separateDataSet(y, tX, 6200);
 
+% We now easily spot some outliers in the second model
+outliers2 = y2 > 7200;
+tX2 = tX2(~outliers2, :);
+y2 = y2(~outliers2);
+
 %% Learn model M2
 % As observed, the second model is simply a constant
 
@@ -66,6 +71,7 @@ fprintf('Error with the joint classifier: %f | %f\n', trErrHybrid, teErrHybrid);
 %% Predict test data using the best model
 
 yPredicted = predictor(tXtoPredict);
+
 path = './data/regression-output.csv';
 writeCsv(yPredicted, path);
 disp(['Predictions output to ', path]);
