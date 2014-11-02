@@ -15,8 +15,10 @@ seed = randi(10000);
 %% Preprocessing
 
 % Normalize features (except the discrete ones)
-[X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
-[~, XtoPredict(:,1:35)] = normalized(X(:,1:35), XtoPredict(:,1:35));
+notNormalized = X(:,1:35);
+[X(:,1:35), X_test(:,1:35)] = normalized(notNormalized, X_test(:,1:35));
+[~, XtoPredict(:,1:35)] = normalized(notNormalized, XtoPredict(:,1:35));
+clear notNormalized;
 
 % We perform dummy variables encoding on categorical variables only
 categoricalVariables = [36 38 40 43 44];
