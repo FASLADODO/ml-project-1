@@ -13,22 +13,21 @@ seed = randi(10000);
 [X, y, X_test, y_test] = split(y_train, X_train, 0.8, seed);
 
 %% Preprocessing
+
+% Normalize features (except the discrete ones)
+[X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
+[~, XtoPredict(:,1:35)] = normalized(X(:,1:35), XtoPredict(:,1:35));
+
 % We perform dummy variables encoding on categorical variables only
 categoricalVariables = [36 38 40 43 44];
 X = dummyEncoding(X, categoricalVariables);
 X_test = dummyEncoding(X_test, categoricalVariables);
 XtoPredict = dummyEncoding(XtoPredict, categoricalVariables);
 
-% Normalize features (except the discrete ones)
-[X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
-[~, XtoPredict(:,1:35)] = normalized(X(:,1:35), XtoPredict(:,1:35));
-
 N = length(y);
 tX = [ones(N, 1) X];
 tX_test = [ones(length(y_test), 1) X_test];
 tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
-
-%% TODO: use feature selection and basis functions
 
 %% Model separation
 % We make the assumption that two distinct models can be used to explain
@@ -53,14 +52,23 @@ betaM2(1) = mean(y2);
 % On the other hand, the first model is not obvious and should be learnt
 % using a ML technique.
 
+% Basis function expansion
+% Allows us to fit a more complex model, but might produce overfitting.
+% This is why we use ridge regression.
+% We found that polynomials of degree 4 produced the best tradeoff.
+% Warning: do not apply basis extension to binary variables!
+% Note that this transformation must be applied to all new input data at
+% the time of prediction.
+tX1 = [ones(size(tX1, 1), 1) createPoly(tX1(:, 2:36), 4) tX1(:, 37:end)];
+
 proportion = 0.5; % Train / test split
 k = 5; % k-fold cross validation
 lambdas = logspace(0, 2, 100);
 betaM1 = ridgeRegressionAuto(y1, tX1, proportion, k, lambdas);
 
 %% Constitute the best predictor
-% Two steps: classify to select the model, then apply the corresponding
-% prediction.
+% Two steps: classify to select the model, then apply the necessary transformation
+% and finaly compute the prediction.
 
 predictor = @(tX) hybridPredictor(tX, betaClassifier, betaM1, betaM2);
 
