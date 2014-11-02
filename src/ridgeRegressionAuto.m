@@ -58,7 +58,7 @@ function [betaStar, trainingErr, testErr] = ridgeRegressionAuto(y, tX, K, lambda
         if(testErr(i) < bestErr || bestErr < 0)
             betaStar = beta;
             bestErr = testErr(i);
-            fprintf('Error %f obtained with lambda = %f\n', bestErr, lambda);
+            %fprintf('Error %f obtained with lambda = %f\n', bestErr, lambda);
         end;
     end;
     
