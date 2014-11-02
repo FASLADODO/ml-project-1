@@ -18,6 +18,7 @@ function [beta, tX1, y1, tX2, y2] = separateDataSet(y, tX, threshold)
     y2 = y(~c1);
     
     % Check the validity of the classifier visually
+    %{
     figure;
     for i = 1:25
         subplot(5, 5, i);
@@ -25,4 +26,5 @@ function [beta, tX1, y1, tX2, y2] = separateDataSet(y, tX, threshold)
         plot(tX1, y1, '.b');
         plot(tX2, y2, '.r');
     end;
+    %}
 end

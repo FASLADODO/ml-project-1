@@ -4,26 +4,31 @@ addpath(genpath('./src'), genpath('../src'));
 
 clear;
 load('regression.mat');
+% Our goal is to output values for this input
+XtoPredict = X_test;
 
 % We change the seed (and thus the train / test split)
 % at each run to check the stability of our results
-seed = randi(1, 100000);
+seed = randi(10000);
 [X, y, X_test, y_test] = split(y_train, X_train, 0.8, seed);
 
 %% Preprocessing
 % We perform dummy variables encoding on categorical variables only
 categoricalVariables = [36 38 40 43 44];
-%X = dummyEncoding(X, categoricalVariables);
-%X_test = dummyEncoding(X_test, categoricalVariables);
+X = dummyEncoding(X, categoricalVariables);
+X_test = dummyEncoding(X_test, categoricalVariables);
+XtoPredict = dummyEncoding(XtoPredict, categoricalVariables);
 
 % Normalize features (except the discrete ones)
 [X(:,1:35), X_test(:,1:35)] = normalized(X(:,1:35), X_test(:,1:35));
+[~, XtoPredict(:,1:35)] = normalized(X(:,1:35), XtoPredict(:,1:35));
 
 N = length(y);
 tX = [ones(N, 1) X];
 tX_test = [ones(length(y_test), 1) X_test];
+tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
 
-% TODO: use feature selection and basis functions
+%% TODO: use feature selection and basis functions
 
 %% Model separation
 % We make the assumption that two distinct models can be used to explain
@@ -59,6 +64,8 @@ teErrHybrid = computeRmse(y_test, predictor(tX_test));
 fprintf('Error with the joint classifier: %f | %f\n', trErrHybrid, teErrHybrid);
 
 %% Predict test data using the best model
-% TODO
 
-% Export predictions to CSV
+yPredicted = predictor(tXtoPredict);
+path = './data/regression-output.csv';
+writeCsv(yPredicted, path);
+disp(['Predictions output to ', path]);
