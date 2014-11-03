@@ -1,0 +1,3 @@
+method,rmse,0-1-loss,log-loss
+logisticRegression,0.334,0.094,0.383
+penLogisticRegression,0.489,0.107,0.672

@@ -22,14 +22,14 @@ threshold = 10; % outliers are more than 10 standard deviation from the median
 [X, y] = removeOutliers(X, y, threshold);
 % prepare data
 tX = [ones(size(X,1), 1) X];
-tX_te = [ones(size(X_te,1), 1) X_te]; 
+tX_te = [ones(size(X_te,1), 1) X_te];
+
 y(y < 1) = 0; % changing {-1, 1} to {0, 1}
 alpha = 0.5; % step size
 
 %% Estimate train and test error with k-fold cross validation
 K = 5; % CV folds
 % split data in k fold (create indices only)
-setSeed(3);
 N = size(y,1);
 idx = randperm(N);
 Nk = floor(N/K);
@@ -68,17 +68,22 @@ end
 % least squares 	|
 % LR 				|
 % PLR 				|
-err = err / K
+err = err / K;
+err
 
 %% Output prediction
 bestBeta = logisticRegression(y, tX, alpha);
 % probability p(y=1|data)
 [~, pHat] = binaryPrediction(tX_te, bestBeta);
-csvwrite('./results/predictions_classification.csv', pHat);
+path = './results/predictions_classification.csv';
+csvwrite(path, pHat);
+disp(['Predictions output to ', path]);
 
 % Output error estimates
-fid = fopen('./results/test_errors_classification.csv', 'w');
+path = './results/test_errors_classification.csv';
+fid = fopen(path, 'w');
 fprintf(fid, 'method,rmse,0-1-loss,log-loss\n');
 fprintf(fid, 'logisticRegression,%.3f,%.3f,%.3f\n', err(3,4), err(3,5), err(3,6));
 fprintf(fid, 'penLogisticRegression,%.3f,%.3f,%.3f\n', err(4,4), err(4,5), err(4,6));
 fclose(fid);
+disp(['Error estimates output to ', path]);
