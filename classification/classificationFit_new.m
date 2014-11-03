@@ -20,16 +20,13 @@ X_te = dummyEncoding(X_te, categoricalVariables);
 %% Removing the outliers
 threshold = 10; % outliers are more than 10 standard deviation from the median
 [X, y] = removeOutliers(X, y, threshold);
-
-
 % prepare data
 tX = [ones(size(X,1), 1) X];
 tX_te = [ones(size(X_te,1), 1) X_te]; 
 y(y < 1) = 0; % changing {-1, 1} to {0, 1}
 alpha = 0.5; % step size
 
-%penLogisticRegressionAuto(y, tX);
-
+%% Estimate train and test error with k-fold cross validation
 K = 5; % CV folds
 % split data in k fold (create indices only)
 setSeed(3);
@@ -73,14 +70,13 @@ end
 % PLR 				|
 err = err / K
 
+%% Output prediction
+bestBeta = logisticRegression(y, tX, alpha);
+% probability p(y=1|data)
+[~, pHat] = binaryPrediction(tX_te, bestBeta);
+csvwrite('./data/classification-output.csv', pHat);
 
-
-
-% output prediction
-beta_bestmodel = logisticRegression(y, tX, alpha);
-pHatn = exp(logSigmoid(tX_te * beta_bestmodel)); % probability p(y=1|data)
-csvwrite('./data/classification-output.csv', pHatn);
-
+% Output error estimates
 fid = fopen('./data/test_errors_classification.csv', 'w');
 fprintf(fid, 'method,rmse,0-1-loss,log-loss\n');
 fprintf(fid, 'logisticRegression,%.3f,%.3f,%.3f\n', err(3,4), err(3,5), err(3,6));
