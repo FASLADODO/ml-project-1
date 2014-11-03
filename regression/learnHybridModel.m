@@ -34,9 +34,10 @@ function allBetas = learnHybridModel(y, tX, threshold)
     tX1 = [ones(size(tX1, 1), 1) createPoly(tX1(:, 2:36), 4) tX1(:, 37:end)];
     
     % Ridge regression uses its own k-fold cross validation to select lambda
+    seed = randi(10000);
     k = 5;
     lambdas = logspace(0, 2, 100);
-    allBetas{2} = ridgeRegressionAuto(y1, tX1, k, lambdas);
+    allBetas{2} = ridgeRegressionAuto(y1, tX1, k, lambdas, seed);
 
     % Learn model M2
     % As observed, the second model is simply a constant

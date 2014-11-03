@@ -50,14 +50,14 @@ for degree = 1:length(degrees);
         lambdas = logspace(-1, 4, 50);
         % We leave X_test and y_test out of the learning process of ridge
         % regression to be able to test its results on truly fresh data
-        [beta, trainingErr, testErr] = ridgeRegressionAuto(yTr, tXTr, proportion, k, lambdas);
+        [beta, trainingErr, testErr] = ridgeRegressionAuto(yTr, tXTr, k, lambdas, s);
       
         ridgeTrErr(:,s) = trainingErr;
         ridgeTeErr(:,s) = testErr;
         
         % train and test RMSE
-        rmseTr(s,degree) =  computeRmse(yTr, tXTr*beta); 
-        rmseTe(s,degree) =  computeRmse(yTe, tXTe*beta);  
+        rmseTr(s,degree) =  computeRmse(yTr, tXTr*beta);
+        rmseTe(s,degree) =  computeRmse(yTe, tXTe*beta); 
         
         % print for each seeds
         %fprintf('Degree %.2f: Train RMSE :%0.4f Test RMSE :%0.4f\n', degree, rmseTr(s,degree), rmseTe(s,degree));

@@ -38,7 +38,7 @@ EPFL \\
 
 
 \begin{abstract}
-  In this report, we summarize our findings for the project-I. We analyzed two datasets, regression (D1) and classification (D2). On our regression data, we found the data was following two different models and thus applied either a constant value model or basis functions transformation and ridge regression. On our classification data, we performed binary classification using ...
+  In this report, we summarize our findings for the project-I. We analyzed two datasets, regression (D1) and classification (D2). On our regression data, we found the data was following two different models and thus applied either a constant value model or basis functions transformation and ridge regression. On our classification data, we performed binary classification using TODO
 \end{abstract}
 
 
@@ -72,7 +72,7 @@ EPFL \\
       \label{fig:twoModelsX35}
     }
     \hfill
-    \subfigure[First try at separating the two models using $X_{35} > 1$]{
+    \subfigure[First try at separating the two models on regression data using $X_{35} > 1$]{
       \includegraphics[width=4in]{figures/regression/model-separation-rough.pdf}
       \label{fig:twoModelsRough}
     }
@@ -91,8 +91,10 @@ EPFL \\
   \begin{itemize}
     \item Applies polynomial basis expansion up to degree $d$
     \item Creates a large number of test / train splits, producing $s$ trials enabling us to validate the stability of our results
-    \item For each trial, selects the best $\lambda$ penalization parameter using grid search over a logarithmic range of candidate values. 
+    \item For each trial, applies ridge regression selecting the best $\lambda$ penalization parameter using grid search over a logarithmic range of candidate values. 
   \end{itemize}
+  
+  Note that we are here using Ridge Regression because the polynomial transformation brings rank deficiency into the new input matrix, which makes Least Squares not suitable.
 
   We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. From Figure \ref{fig:basisExpansionTestError}, a polynomial expansion of degree 4 provides the best expected test error.
 
@@ -119,7 +121,9 @@ EPFL \\
     \item Otherwise, applies dummy encoding and basis expansion and outputs the prediction corresponding to model $M_1$ using our learnt predictor $\beta$.
   \end{enumerate}
 
-  We verified the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors over many train / test splits. The average RMSE are summarized in Table \ref{predictorValidation}.
+  We verified the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors using cross validation with 10 folds. The average RMSE are summarized in Table \ref{predictorValidation}. 
+  
+  From this comparison table, we can notice that ridge regression does not bring a significant improvement compared to least squares if no feature transformation is performed. However using a polynomial expansion of degree 4 and then applying ridge regression decreases considerably the error. Our hybrid predictor combining two models gives us the lowest error amongst all.
 
   \begin{table}[h]
     \center
@@ -132,6 +136,8 @@ EPFL \\
       Least squares over the whole dataset    & 0.512306   & 0.531639 \\
       \hline
       Ridge regression over the whole dataset & 0.523865   & 0.526744 \\
+      \hline
+      Basis functions and Ridge reg over the whole dataset & 0.523865   & 0.526744 \\
       \hline
       Hybrid predictor                        & 0.320812   & 0.347088 \\
       \hline
@@ -164,9 +170,9 @@ EPFL \\
 \section{Summary}
 In this report, we analyzed 2 datasets: one regression dataset and one classification dataset. 
 
-In our regression dataset we found that our data was following 2 models. For the most complex model we found ridge regression applied after features transformations with a polynomial function of degree 4 is a reasonable fit. On the simplest model, a constant value returns a good fit. We estimate that the average test error is [TO DO].
+In our regression dataset we found that our data was following 2 models. For the most complex model we found ridge regression applied after features transformations with a polynomial function of degree 4 is a reasonable fit. On the simplest model, a constant value returns a good fit. We estimate that the average test error is TODO
 
-In our classification dataset, we had to do binary classification. We found that... We estimate the average test error is [TO DO].
+In our classification dataset, we had to do binary classification. We found that... We estimate the average test error is TODO
 
 \subsubsection*{Acknowledgments}
   We would like to thank Prof. Emtiyaz Khan and the teaching assistants for creating this project which was a great opportunity for us to put in practice our the Machine Learning techniques seen in class on a serious dataset. We also would like to thank them for their availability during the project.\\
