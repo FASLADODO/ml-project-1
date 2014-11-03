@@ -6,7 +6,7 @@ clear;
 load('regression.mat');
 
 X = X_train;
-y = y_train;
+y = normalized(y_train);
 
 % This seed is used to reset the RNG when needed to obtain comparable
 % splits (e.g. when trying to select lambda)

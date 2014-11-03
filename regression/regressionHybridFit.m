@@ -6,7 +6,7 @@ clear;
 load('regression.mat');
 
 X = X_train;
-y = y_train;
+y = normalized(y_train);
 % Our goal is to predict values for this input
 XtoPredict = X_test;
 
@@ -32,7 +32,7 @@ tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
 %% Constitute the best predictor and estimate its test error
 
 % The threshold was chosen from observation of the output data
-threshold = 6200;
+threshold = 2; % For a non-normalized output: 6200
 learn = @(y, tX) learnHybridModel(y, tX, threshold);
 predict = @(tX, betas) hybridPredictor(tX, betas{1}, betas{2}, betas{3});
 
