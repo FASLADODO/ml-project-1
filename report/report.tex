@@ -176,6 +176,24 @@ EPFL \\
 
   Finally, we applied penalized logistic regression to obtain our best result over D2. As explained in section \ref{regression-fit} for ridge regression, our penalized logistic regression function selects the most appropriate regularization parameter $\lambda$ among a range of values by computing the expected test error. In this case, $\lambda \in [10^{-2}; 10^2]$.
 
+  We summarize three relevant expected error measures in Table \ref{classifierValidation}.
+
+  \begin{table}[ht]
+    \center
+    \begin{tabular}{|r|c|c|c|c|c|c|}
+      \hline
+      \textbf{10-fold CV estimates} & \multicolumn{3}{c|}{Training}   & \multicolumn{3}{c|}{Test}    \\
+                                    & RMSE      & 0-1 Loss & Log-loss & RMSE   & 0-1 Loss & Log-loss \\
+      \hline
+      Logistic regression           & 0.3013    & 0.0524   & 0.3307   & 0.320  & 0.085    & 0.358    \\
+      \hline
+      Penalized logistic regression & 0.2678    & 0.0468   & 0.2714   & 0.290  & 0.081    & 0.303    \\
+      \hline
+    \end{tabular}
+    \caption{Validation of our prediction. As described earlier, feature transformations were applied.}
+    \label{classifierValidation}
+  \end{table}
+
   \subsection{Predictions}
   After validating the stability of our results with 10-fold cross validation, we used all available data examples to train a model using penalized logistic regression. We generated the classification probabilities corresponding the \texttt{X\_test} input vector and wrote them to \texttt{predictions\_classification.csv}.
 
