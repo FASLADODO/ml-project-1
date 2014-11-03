@@ -115,7 +115,7 @@ EPFL \\
 
   Note that our implementation of ridge regression selects the regularization parameter $\lambda$ automatically by computing the expected test error using k-fold cross validation (kCV). For this dataset, we used $k = 10$ and $\lambda$ to be selected among a logarithmic range of 100 values from $1$ to $10^2$.
 
-  \subsection{Regression fit and prediction}
+  \subsection{Regression fit and prediction} \label{regression-fit}
   With the necessary data analysis and pre-processing taken care of, we were able to easily learn the parameters for our two models:
   \begin{itemize}
     \item $M_1$: model parameter vector $\beta$ is learnt using ridge regression with automatic $\lambda$ selection. The algorithm selected $\lambda \approx 50$.
@@ -145,7 +145,7 @@ EPFL \\
       \hline
       Ridge regression                            & 0.513674   & 0.532057  \\
       \hline
-      Basis functions and ridge regression        & 0.298089   & 0.335880  \\
+      Basis expansion and ridge regression        & 0.298089   & 0.335880  \\
       \hline
       Hybrid predictor                            & 0.168528   & 0.203762  \\
       \hline
@@ -161,19 +161,32 @@ EPFL \\
 
   \subsection{Dataset description}
   This dataset has $N = 1500$ data examples with dimensionality $D = 32$, as well as $N' = 1500$ test examples. Out of these 32 features, 29 are real-valued and 3 are categorical.\\
-  Output $\mathbf{y}$ is a binary variable, which implies we are faced with a classification problem. 1052 examples belong to class $C_1$ (for which $y = 0$) and 448 examples belong to $C_2$. Like before, our goal is to produce predictions for test examples, as well as an approximation of the test error.
+  Output $\mathbf{y}$ is a binary variable, which implies that we are faced with a classification problem. 448 examples belong to class $C_1$ (for which $y = 0$) and 1052 examples belong to $C_2$. Like before, our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
-  We performed data analysis similar to the one used for D1. Spotting outliers on a classification dataset is not an easy task, therefore we have assumed that a data point is an outlier if for any feature it lies more than 10 standard deviations away from the median. This gives us a "cleaned'' dataset of 1469 examples.
+  We performed data analysis steps similar to the one taken for D1. However, spotting outliers visually on a classification dataset is not an easy task, therefore we have assumed that a data point is an outlier if for any feature it lies more than 10 standard deviations away from the median. We obtained a ``clean'' dataset of 1469 examples.
 
   For more convenience of manipulation, we moved categorical variables to the last columns of the input matrix and used dummy encoding for each of them. This gives us a total of 46 input variables.
 
-  \subsection{Logistic regression fit}
-
   \subsection{Feature transformations}
+  Applying feature transformations to D2 proved hard than it was for D1. Rank deficiency appeared systematically and the prediction results were not generalizing well, even though we used a regularization term. We found empirically that it improved the results to append the squareroot of the real-valued features to the input matrix. Since this transformation did not prevent generalization nor caused rank deficiency, we used it in the following steps.
+
+  \subsection{Logistic regression fit}
+  In order to quickly get a baseline for the quality of our models, we learnt two of the simplest models: constant-valued and using least-squares. We carried on by applying logistic regression and saw a dramatic improvement in the expected quality of the results (from $30\%$ of misclassifications to less than $10\%$). We made sure to use the ``log-exp'' trick (seen during the exercise sessions) to avoid numerical issues.
+
+  Finally, we applied penalized logistic regression to obtain our best result over D2. As explained in section \ref{regression-fit} for ridge regression, our penalized logistic regression function selects the most appropriate regularization parameter $\lambda$ among a range of values by computing the expected test error. In this case, $\lambda \in [10^{-2}; 10^2]$.
 
   \subsection{Predictions}
+  After validating the stability of our results with 10-fold cross validation, we used all available data examples to train a model using penalized logistic regression. We generated the classification probabilities corresponding the \texttt{X\_test} input vector and wrote them to \texttt{predictions\_classification.csv}.
 
+  We check our output visually on Figure \ref{fig:classification-output} and verify that the results are in $[0; 1]$. We observe a distribution skewed towards 1, which is consistant with the fact that about $70\%$ of the training examples belong to $C_2$.
+
+  \begin{figure}[h]
+    \center
+    \includegraphics[width=2.5in]{figures/classification/output-phat.pdf}
+    \caption{Repartition of the output probabilities}
+    \label{fig:classification-output}
+  \end{figure}
 
 \section{Summary}
 In this report, we analyzed 2 datasets: one regression dataset and one classification dataset. 
