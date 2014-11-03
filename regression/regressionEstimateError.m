@@ -7,6 +7,8 @@ load('regression.mat');
 
 X = X_train;
 y = normalized(y_train);
+% Our goal is to predict values for this input
+XtoPredict = X_test;
 
 % This seed is used to reset the RNG when needed to obtain comparable
 % splits (e.g. when trying to select lambda)
@@ -23,12 +25,14 @@ K = 10;
 % We perform dummy variables encoding on categorical variables only
 categoricalVariables = [36 38 40 43 44];
 X = dummyEncoding(X, categoricalVariables);
+XtoPredict = dummyEncoding(XtoPredict, categoricalVariables);
 
 % Normalize features (except the discrete ones)
-X(:,1:35) = normalized(X(:,1:35));
+[X(:,1:35), XtoPredict(:,1:35)] = normalized(X(:,1:35), XtoPredict(:,1:35));
 
 N = length(y);
 tX = [ones(N, 1) X];
+tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
 
 %% Get a baseline for the cost by fitting a one-variable model
 learnConstant = @(y, tX) [mean(y); zeros(size(tX, 2) - 1, 1)];
@@ -58,6 +62,25 @@ tXExtended = [ones(size(tX, 1), 1) createPoly(tX(:, 2:36), 4) tX(:, 37:end)];
 [trErrPRR, teErrPRR] = kFoldCrossValidation(y, tXExtended, K, learnRidgeRegression, predictLinear, computeError);
 fprintf('Estimated error with polynomial basis extension and ridge regression : %f | %f\n', trErrPRR, teErrPRR);
 
+%% Constitute the best predictor and estimate its test error
+% The threshold was chosen from observation of the output data
+threshold = 2; % For a non-normalized output: 6200
+learn = @(y, tX) learnHybridModel(y, tX, threshold);
+predict = @(tX, betas) hybridPredictor(tX, betas{1}, betas{2}, betas{3});
+
+[trErrHybrid, teErrHybrid] = kFoldCrossValidation(y, tX, K, learn, predict, @computeRmse);
+fprintf('Error with the hybrid predictor: %f | %f\n', trErrHybrid, teErrHybrid);
+
+%% Predict test data using the best predictor
+% Now that we're confident about the validity of our approach, we can use
+% the whole training dataset to learn the best possible classifier
+bestBeta = learn(y, tX);
+yHat = predict(tXtoPredict, bestBeta);
+
+path = './results/predictions_regression.csv';
+writeCsv(yHat, path);
+disp(['Predictions output to ', path]);
+
 %% Output error estimates
 path = './results/test_errors_regression.csv';
 fid = fopen(path, 'w');
@@ -65,6 +88,7 @@ fprintf(fid, 'method,rmse\n');
 fprintf(fid, 'leastSquaresGD,%.3f\n', teErrLSGD);
 fprintf(fid, 'leastSquares,%.3f\n', teErrLS);
 fprintf(fid, 'ridgeRegression,%.3f\n', teErrPRR);
+fprintf(fid, 'hybridModel,%.3f\n', teErrHybrid);
 fclose(fid);
 
 disp(['Error estimates output to ', path]);
