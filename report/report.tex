@@ -122,7 +122,7 @@ EPFL \\
     \item $M_2$: a constant output value equal to the mean of the outputs from the training observations. We were careful to remove obvious outliers.
   \end{itemize}
 
-  We were finally able to produce our \textbf{hybrid} predictor, which successively:
+  We were finally able to produce our \textbf{layered} predictor, which successively:
   \begin{enumerate}
     \item Classifies any new input using our learnt classifier.
     \item If the input follows $M_2$, outputs the learnt constant value.
@@ -131,7 +131,7 @@ EPFL \\
 
   We verified the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors using 10-fold cross validation. The average RMSE are summarized in Table \ref{predictor-validation}.
 
-  From this comparison table, we can notice that ridge regression does not bring a significant improvement compared to least squares if no feature transformation is performed. This is expected. However using a polynomial expansion of degree 4 and then applying ridge regression decreases considerably the test error. This is coherent as well, since the regularization parameter prevents overfitting. Our hybrid predictor combining two models gives us the lowest expected train error.
+  From this comparison table, we can notice that ridge regression does not bring a significant improvement compared to least squares if no feature transformation is performed. This is expected. However using a polynomial expansion of degree 4 and then applying ridge regression decreases considerably the test error. This is coherent as well, since the regularization parameter prevents overfitting. Our layered predictor combining two models gives the lowest expected train error.
 
   \begin{table}[ht]
     \center
@@ -147,14 +147,14 @@ EPFL \\
       \hline
       Basis expansion and ridge regression        & 0.298089   & 0.335880  \\
       \hline
-      Hybrid predictor                            & 0.168528   & 0.203762  \\
+      Layered predictor                           & 0.168528   & 0.203762  \\
       \hline
     \end{tabular}
     \caption{Validation of our prediction by comparison with simpler models using cross-validation}
     \label{predictor-validation}
   \end{table}
 
-  Finally, we produced our predictions for the given \texttt{X\_test} input vector using the hybrid predictor and wrote them to \texttt{predictions\_regression.csv}.
+  Finally, we produced our predictions for the given \texttt{X\_test} input vector using the layered predictor and wrote them to \texttt{predictions\_regression.csv}.
 
 \section{The classification dataset (D2)}
   Much of the intuition and techniques gained from D1 carried over directly to D2. We report the most interesting results below.
@@ -197,7 +197,7 @@ EPFL \\
   \subsection{Predictions}
   After validating the stability of our results with 10-fold cross validation, we used all available data examples to train a model using penalized logistic regression. We generated the classification probabilities corresponding the \texttt{X\_test} input vector and wrote them to \texttt{predictions\_classification.csv}.
 
-  We check our output visually on Figure \ref{fig:classification-output} and verify that the results are in $[0; 1]$. We observe a distribution skewed towards 1, which is consistant with the fact that about $70\%$ of the training examples belong to $C_2$.
+  We verify our output visually on Figure \ref{fig:classification-output} and confirm that the results are in $[0; 1]$. We observe a distribution skewed towards 1, which is consistant with the fact that about $70\%$ of the training examples belong to $C_2$.
 
   \begin{figure}[ht]
     \center
@@ -216,10 +216,10 @@ In the regression dataset we found that data was following two distinct models, 
 For the classification dataset, we found that using a squareroot basis expansion paired with penalized logistic regression improved the expected test error. Therefore we trained a classifier using this technique and obtain an expected 0-1 loss test error of $8\%$, which seems satisfactory.
 
 \subsubsection*{Acknowledgments}
-  We would like to thank Prof. Emtiyaz Khan and the teaching assistants for creating this project. It was a great opportunity for us to put in practice our the Machine Learning techniques seen in class on a serious dataset. We also would like to thank them for their availability throughout the semester.\\
-  Most ML functions and algorithms were based on the lecture notes or code examples provided by the teaching team for the exercise sessions. We developed several exploratory and application scripts to make use of these techniques. Several helper functions were provided by Prof. Emtiyaz Khan (CSV output, plot prettifying and output, etc).
+  We would like to thank Prof. Emtiyaz Khan and the teaching assistants for creating this project. It was a great opportunity for us to put in practice the machine learning techniques seen in class on non-trivial datasets. We also would like to thank them for their availability throughout the semester.\\
+  Most ML functions and algorithms were based on the lecture notes or code examples provided by the teaching team for the exercise sessions. We developed several exploratory and application scripts to make use of these techniques. Several helper functions were provided by Prof. Emtiyaz Khan (CSV output, plot prettifying, PDF output, etc).
 
 \subsubsection*{References}
-  During implementation, we referred to the lecture and exercise instructions provided by Prof. Emtiyaz Khan and the teaching team. Moreover, we found Andrew Ng's MOOC on Coursera to be helpful, since a few short videos covered precisely points which we were unsure about.
+  During implementation, we referred to the lecture notes and exercise instructions provided by Prof. Emtiyaz Khan and the teaching team. Moreover, we found Andrew Ng's MOOC on Coursera to be helpful, since a few short videos covered precisely points which we were unsure about.
 
 \end{document}
