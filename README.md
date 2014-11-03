@@ -61,6 +61,6 @@ Project's TODO
 - [X] Produce figures for the classification dataset
 - [X] Double-check all figures for labels (on each axis and for the figure itself)
 - [X] Clear conclusion and analysis of the results for each dataset
-- [ ] Include complete details about each algorithm (lambda values, number of folds, number of trials, etc)
-- [ ] What worked and what did not? Why do you think are the reasons behind that?
-- [ ] Why did you choose the method that you chose?
+- [X] Include complete details about each algorithm (lambda values, number of folds, number of trials, etc)
+- [X] What worked and what did not? Why do you think are the reasons behind that?
+- [X] Why did you choose the method that you chose?
