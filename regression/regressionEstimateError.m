@@ -8,6 +8,10 @@ load('regression.mat');
 X = X_train;
 y = y_train;
 
+% This seed is used to reset the RNG when needed to obtain comparable
+% splits (e.g. when trying to select lambda)
+seed = randi(100);
+
 % Prediction function for any linear model
 predictLinear = @(tX, beta) tX * beta;
 % Compute RMSE error for a given prediction
@@ -15,7 +19,7 @@ computeError = @computeRmse;
 % We'll perform k-fold cross validation to estimate error for each method
 K = 10; 
 
-%% Preprocessing
+% Preprocessing
 % We perform dummy variables encoding on categorical variables only
 categoricalVariables = [36 38 40 43 44];
 X = dummyEncoding(X, categoricalVariables);
@@ -44,7 +48,7 @@ fprintf('Estimated error with least squares (gradient descent): %f | %f\n', trEr
 %% Train a linear model using ridge regression
 % Note that ridge regression uses its own cross validation to select lambda
 lambdas = logspace(0, 2, 100);
-learnRidgeRegression = @(y, tX) ridgeRegressionAuto(y, tX, 5, lambdas);
+learnRidgeRegression = @(y, tX) ridgeRegressionAuto(y, tX, 5, lambdas, seed);
 [trErrRR, teErrRR] = kFoldCrossValidation(y, tX, K, learnRidgeRegression, predictLinear, computeError);
 fprintf('Estimated error with ridge regression: %f | %f\n', trErrRR, teErrRR);
 
