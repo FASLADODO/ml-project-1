@@ -14,6 +14,11 @@ categoricalVariables = [1 15 30];
 X = dummyEncoding(X, categoricalVariables);
 X_te = dummyEncoding(X_te, categoricalVariables);
 
+% Basis extension
+degree = 0.5;
+X = [X(:, 1:29) abs(X(:, 1:29)).^degree X(:, 30: end)];
+X_te = [X_te(:, 1:29) abs(X_te(:, 1:29)).^degree X_te(:, 30: end)];
+
 % Normalize features (except the discrete ones)
 [X(:,1:29), X_te(:,1:29)] = normalized(X(:,1:29), X_te(:,1:29));
 
@@ -21,12 +26,13 @@ X_te = dummyEncoding(X_te, categoricalVariables);
 threshold = 10; % outliers are more than 10 standard deviation from the median
 [X, y] = removeOutliers(X, y, threshold);
 
-
 % prepare data
 tX = [ones(size(X,1), 1) X];
-tX_te = [ones(size(X_te,1), 1) X_te]; 
+tX_te = [ones(size(X_te,1), 1) X_te];
+
 y(y < 1) = 0; % changing {-1, 1} to {0, 1}
 alpha = 0.5; % step size
+
 
 logisticRegression(y, tX, alpha);
 

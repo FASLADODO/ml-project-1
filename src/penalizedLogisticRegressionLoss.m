@@ -10,7 +10,6 @@ function [err, gradient, hessian] = penalizedLogisticRegressionLoss(y, tX, beta,
     err = err + beta' * lBeta / (2 * n);
     gradient = gradient + lBeta / n;
     hessian = hessian + lambda / n;
-
 end
 
 function [err, gradient, hessian] = logisticRegressionLoss(y, tX, beta)
@@ -30,4 +29,3 @@ function g = computeLogisticRegressionGradient(y, tX, beta)
 	lSigmoid = logSigmoid(A);
 	g = (tX' * (exp(lSigmoid) - y)) / size(y, 1);
 end
-

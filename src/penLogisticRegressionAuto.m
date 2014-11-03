@@ -45,17 +45,17 @@ function [beta, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, lamb
     
     % We have now chosen the best lambda value, we can use all the provided
     % tX as train data to learn a model
-    beta = ridgeRegression(y, tX, lambdaStar);
+    beta = logisticRegression(y, tX, lambdaStar);
     
     % Plot evolution of train and test error with respect to lambda
-    
+    %{
     figure;
     semilogx(lambdaValues, trainingErr, '.-b');
     hold on;
     semilogx(lambdaValues, testErr, '.-r');
     xlabel('Lambda');
     ylabel('Training (blue) and test (red) error');
-    
+    %}
 end
 
 
