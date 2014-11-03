@@ -17,17 +17,17 @@
 \title{Machine Learning Project I by Group KATHMANDU}
 
 \author{
-Jade Copet\\
-EPFL \\
-\texttt{jade.copet@epfl.com} \\
-\And
-Merlin Nimier David\\
-EPFL \\
-\texttt{merlin.nimier-david@epfl.com} \\
-\And
-Krishna Raj Sapkota\\
-EPFL \\
-\texttt{krishna.sapkota@epfl.com} \\
+  Jade Copet\\
+  EPFL \\
+  \texttt{jade.copet@epfl.com} \\
+  \And
+  Merlin Nimier David\\
+  EPFL \\
+  \texttt{merlin.nimier-david@epfl.com} \\
+  \And
+  Krishna Raj Sapkota\\
+  EPFL \\
+  \texttt{krishna.sapkota@epfl.com} \\
 }
 
 \nipsfinalcopy
@@ -76,7 +76,7 @@ EPFL \\
       \includegraphics[width=4in]{figures/regression/model-separation-rough.pdf}
       \label{fig:regression-model-separation}
     }
-    \caption{}
+    \caption{Exploratory data analysis on D1}
   \end{figure}
 
   \subsection{Model separation}
@@ -156,6 +156,8 @@ EPFL \\
 
   Finally, we produced our predictions for the given \texttt{X\_test} input vector using the layered predictor and wrote them to \texttt{predictions\_regression.csv}.
 
+
+
 \section{The classification dataset (D2)}
   Much of the intuition and techniques gained from D1 carried over directly to D2. We report the most interesting results below.
 
@@ -206,14 +208,16 @@ EPFL \\
     \label{fig:classification-output}
   \end{figure}
 
+
+
 \section{Summary}
-In this report, we applied machine learning techniques to two problems: a regression and a classification dataset. This required a strong understanding of the underlying the theory, as well as good implementation skills. Efforts were made towards producing modular code. Some functions could be made generic, so as to limit code duplication and allow future reuse.
+  In this report, we applied machine learning techniques to two problems: a regression and a classification dataset. This required a strong understanding of the underlying the theory, as well as good implementation skills. Efforts were made towards producing modular code. Some functions could be made generic, so as to limit code duplication and allow future reuse.
 
-Lacking experience in machine learning, we were faced throughout the project with difficulties interpreting some numerical results or algorithm behavior. We found that, after careful debugging, verifying the stability of the results provided us with stronger confidence about our predictions.
+  Lacking experience in machine learning, we were faced throughout the project with difficulties interpreting some numerical results or algorithm behavior. We found that, after careful debugging, verifying the stability of the results provided us with stronger confidence about our predictions.
 
-In the regression dataset we found that data was following two distinct models, therefore we devised a layered predictor. A classifier trained with logistic regression selects one of two models to apply. The first model benefited from polynomial features transformation up to degree 4 and ridge regression. The second model was well described by a constant value. The combined predictor leads to an expected RMSE test error of $0.204$, which is more than twice lower than a linear least squares fit.
+  In the regression dataset we found that data was following two distinct models, therefore we devised a layered predictor. A classifier trained with logistic regression selects one of two models to apply. The first model benefited from polynomial features transformation up to degree 4 and ridge regression. The second model was well described by a constant value. The combined predictor leads to an expected RMSE test error of $0.204$, which is more than twice lower than a linear least squares fit.
 
-For the classification dataset, we found that using a squareroot basis expansion paired with penalized logistic regression improved the expected test error. Therefore we trained a classifier using this technique and obtain an expected 0-1 loss test error of $8\%$, which seems satisfactory.
+  For the classification dataset, we found that using a squareroot basis expansion paired with penalized logistic regression improved the expected test error. Therefore we trained a classifier using this technique and obtain an expected 0-1 loss test error of $8\%$, which seems satisfactory.
 
 \subsubsection*{Acknowledgments}
   We would like to thank Prof. Emtiyaz Khan and the teaching assistants for creating this project. It was a great opportunity for us to put in practice the machine learning techniques seen in class on non-trivial datasets. We also would like to thank them for their availability throughout the semester.\\
