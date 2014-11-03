@@ -5,12 +5,12 @@ addpath(genpath('./src'), genpath('../src'));
 clear;
 load('classification.mat');
 
+% Relabel -1 to 0 in the output
+y_train(y_train < 1) = 0;
+
 X = X_train;
 y = y_train;
 XtoPredict = X_test;
-
-% Relabel -1 to 0 in the output
-y_train(y_train < 1) = 0;
 
 % This seed is used to reset the RNG when needed to obtain comparable
 % splits (e.g. when trying to select lambda)
@@ -37,13 +37,8 @@ XtoPredict = dummyEncoding(XtoPredict, categoricalVariables);
 deviations = 10; % Outliers are more than 10 standard deviation from the median
 [X, y] = removeOutliers(X, y, deviations);
 
-% Basis function expansion
-% We found that polynomials of degree ??? produced the best tradeoff.
 tX = [ones(length(y), 1) X];
 tXtoPredict = [ones(size(XtoPredict, 1), 1) XtoPredict];
-% TODO
-%tX = [ones(length(y), 1) createPoly(X(:, 1:29), 4) X(:, 30:end)];
-%tX_test = [ones(length(y_test), 1) createPoly(X_test(:, 1:29), 4) X_test(:, 30:end)];
 
 %% Get a baseline for the cost by fitting a one-variable model
 learnConstant = @(y, tX) [mean(y); zeros(size(tX, 2) - 1, 1)];
@@ -62,17 +57,28 @@ fprintf('Estimated error with logistic regression: %f | %f\n', trErrLR, teErrLR)
 
 %% Train a linear model using penalized logistic regression
 % Note penalized logistic regression uses its own kCV to select lambda
-lambdas = logspace(-2, 2, 50);
+lambdas = logspace(0, 1, 20);
 learnPenLogReg = @(y, tX) penLogisticRegressionAuto(y, tX, 5, lambdas, seed);
 [trErrPLR, teErrPLR] = kFoldCrossValidation(y, tX, K, learnPenLogReg, predictLinear, computeError);
 fprintf('Estimated error with penalized logistic regression: %f | %f\n', trErrPLR, teErrPLR);
 
+%% Train a linear model using basis extension and penalized logistic regression
+lambdas = logspace(-1, 5, 20);
+learnPenLogReg = @(y, tX) penLogisticRegressionAuto(y, tX, 5, lambdas, seed);
+
+% TODO: find best basis extension
+degree = 2;
+%tXExtended = [ones(length(y), 1) createPoly(tX(:, 2:30), degree) tX(:, 31:end)];
+%tXExtended = [ones(length(y), 1) tX(:, 2:30) tX(:, 2:30).^0.5 tX(:, 31:end)];
+%[trErrPLRE, teErrPLRE] = kFoldCrossValidation(y, tXExtended, K, learnPenLogReg, predictLinear, computeError);
+%fprintf('Estimated error with basis extension and penalized logistic regression: %f | %f\n', trErrPLRE, teErrPLRE);
+
 %% Predict test data using the best model
 % TODO: actually use the best technique
-bestBeta = learnLogReg(y, tX);
+bestBeta = learnPenLogReg(y, tX);
 [yHat, pHat] = binaryPrediction(tXtoPredict, bestBeta);
 
 % Export predictions to CSV
 path = './data/classification-output.csv';
-writeCsv(yHat, path);
+writeCsv(pHat, path);
 disp(['Predictions output to ', path]);

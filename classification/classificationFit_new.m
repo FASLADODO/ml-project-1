@@ -79,9 +79,9 @@ err = err / K
 % output prediction
 beta_bestmodel = logisticRegression(y, tX, alpha);
 pHatn = exp(logSigmoid(tX_te * beta_bestmodel)); % probability p(y=1|data)
-csvwrite('predictions_classification.csv', pHatn);
+csvwrite('./data/classification-output.csv', pHatn);
 
-fid = fopen('test_errors_classification.csv', 'w');
+fid = fopen('./data/test_errors_classification.csv', 'w');
 fprintf(fid, 'method,rmse,0-1-loss,log-loss\n');
 fprintf(fid, 'logisticRegression,%.3f,%.3f,%.3f\n', err(3,4), err(3,5), err(3,6));
 fprintf(fid, 'penLogisticRegression,%.3f,%.3f,%.3f\n', err(4,4), err(4,5), err(4,6));
