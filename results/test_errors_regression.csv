@@ -1,5 +1,5 @@
 method,rmse
-leastSquaresGD,0.530
+leastSquaresGD,0.529
 leastSquares,0.534
 ridgeRegression,0.336
-hybridModel,0.207
+hybridModel,0.204
