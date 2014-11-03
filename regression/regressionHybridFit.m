@@ -45,6 +45,6 @@ fprintf('Error with the hybrid predictor: %f | %f\n', trErrHybrid, teErrHybrid);
 bestBeta = learn(y, tX);
 yHat = predict(tXtoPredict, bestBeta);
 
-path = './data/regression-output.csv';
+path = './results/predictions_regression.csv';
 writeCsv(yHat, path);
 disp(['Predictions output to ', path]);

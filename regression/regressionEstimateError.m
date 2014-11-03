@@ -58,5 +58,13 @@ tXExtended = [ones(size(tX, 1), 1) createPoly(tX(:, 2:36), 4) tX(:, 37:end)];
 [trErrPRR, teErrPRR] = kFoldCrossValidation(y, tXExtended, K, learnRidgeRegression, predictLinear, computeError);
 fprintf('Estimated error with polynomial basis extension and ridge regression : %f | %f\n', trErrPRR, teErrPRR);
 
-%% Predict test data using the best model
-% @see regressionHybridFit.m
+%% Output error estimates
+path = './results/test_errors_regression.csv';
+fid = fopen(path, 'w');
+fprintf(fid, 'method,rmse\n');
+fprintf(fid, 'leastSquaresGD,%.3f\n', teErrLSGD);
+fprintf(fid, 'leastSquares,%.3f\n', teErrLS);
+fprintf(fid, 'ridgeRegression,%.3f\n', teErrPRR);
+fclose(fid);
+
+disp(['Error estimates output to ', path]);

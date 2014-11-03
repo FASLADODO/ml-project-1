@@ -79,6 +79,6 @@ bestBeta = learnPenLogReg(y, tX);
 [yHat, pHat] = binaryPrediction(tXtoPredict, bestBeta);
 
 % Export predictions to CSV
-path = './data/classification-output.csv';
+path = './results/classification-output.csv';
 writeCsv(pHat, path);
 disp(['Predictions output to ', path]);

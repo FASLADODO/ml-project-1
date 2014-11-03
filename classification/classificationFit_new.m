@@ -74,10 +74,10 @@ err = err / K
 bestBeta = logisticRegression(y, tX, alpha);
 % probability p(y=1|data)
 [~, pHat] = binaryPrediction(tX_te, bestBeta);
-csvwrite('./data/classification-output.csv', pHat);
+csvwrite('./results/predictions_classification.csv', pHat);
 
 % Output error estimates
-fid = fopen('./data/test_errors_classification.csv', 'w');
+fid = fopen('./results/test_errors_classification.csv', 'w');
 fprintf(fid, 'method,rmse,0-1-loss,log-loss\n');
 fprintf(fid, 'logisticRegression,%.3f,%.3f,%.3f\n', err(3,4), err(3,5), err(3,6));
 fprintf(fid, 'penLogisticRegression,%.3f,%.3f,%.3f\n', err(4,4), err(4,5), err(4,6));
