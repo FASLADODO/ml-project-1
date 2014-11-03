@@ -3,7 +3,19 @@ ml-project-1
 
 EPFL's Pattern Classification and Machine Learning first course project
 
-## Project's TODO
+Project structure
+-----------------
+
+We provide the full project folder. The most relevant files are located in:
+
+- `src`: the machine learning methods used to train model parameters
+- `results`: the CSV outputs
+- `report`: the report PDF and LaTeX source
+- `exploration`: preliminary data analysis scripts developed to get ahold of the datasets
+- `regression` and `classification`: dataset-specific scripts used to optimize expected test error (i.e. train the best model).
+
+Project's TODO
+--------------
 
 ### Data pre-processing
 
@@ -47,8 +59,8 @@ EPFL's Pattern Classification and Machine Learning first course project
 - [X] Produce figures for the regression dataset
 - [X] Report work done for the regression dataset and the corresponding results
 - [X] Produce figures for the classification dataset
+- [X] Double-check all figures for labels (on each axis and for the figure itself)
+- [X] Clear conclusion and analysis of the results for each dataset
+- [ ] Include complete details about each algorithm (lambda values, number of folds, number of trials, etc)
 - [ ] What worked and what did not? Why do you think are the reasons behind that?
 - [ ] Why did you choose the method that you chose?
-- [ ] Include complete details about each algorithm (lambda values, number of folds, number of trials, etc)
-- [ ] Clear conclusion and analysis of the results for each dataset
-- [X] Double-check all figures for labels (on each axis and for the figure itself)
