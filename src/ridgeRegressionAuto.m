@@ -12,8 +12,11 @@ function [beta, trainingErr, testErr] = ridgeRegressionAuto(y, tX, K, lambdaValu
     if(nargin < 4)
        lambdaValues = logspace(-2, 2, 100); 
     end;
-    n = length(lambdaValues);
+    if(nargin < 5)
+       seed = 1; 
+    end;
     
+    n = length(lambdaValues);
     trainingErr = zeros(n, 1);
     testErr = zeros(n, 1);
     bestErr = -1;
