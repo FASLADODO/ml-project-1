@@ -10,7 +10,7 @@ y = y_train;
 
 % This seed is used to reset the RNG when needed to obtain comparable
 % splits (e.g. when trying to select lambda)
-seed = randi(100);
+seed = randi(1000);
 
 % Prediction function for any linear model
 predictLinear = @(tX, beta) tX * beta;

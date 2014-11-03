@@ -4,8 +4,6 @@ function err = computeErrorEstimate(XTe, yTe, beta)
 	% to avoid computing log0 in logLoss 
 	pHat(pHat == 0) = 0.01;
 	pHat(pHat == 1) = 0.99;
-	
-
 
 	% RMSE
 	RMSE = sqrt((yTe - pHat)'*(yTe - pHat) / size(yTe, 1));
