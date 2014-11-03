@@ -14,12 +14,13 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
     betaStar = beta;
     
 	% Convergence criterion
-	epsilon = 1e-04;
+	epsilon = 0.5;
 	k = 0;
     err = -1; bestError = -1;
     errors = 0; % Can be used to plot error VS iteration number
 	progress = 10;
 	while (k < maxIters) && (progress > epsilon)
+	while ((k < maxIters) && (progress > epsilon))
 		k = k + 1;
 		
 		% Newton's method step
@@ -32,7 +33,7 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
 		progress = abs(err - oldErr);
         
 		% Retain the best parameter fitted
-		if(err < bestError || bestError == -1)
+		if (err < bestError || bestError == -1)
 			betaStar = beta;
 			bestError = err;
 		end;

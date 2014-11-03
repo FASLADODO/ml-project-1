@@ -48,14 +48,14 @@ function [beta, trainingErr, testErr] = penLogisticRegressionAuto(y, tX, K, lamb
     beta = ridgeRegression(y, tX, lambdaStar);
     
     % Plot evolution of train and test error with respect to lambda
-    %{
+    
     figure;
     semilogx(lambdaValues, trainingErr, '.-b');
     hold on;
     semilogx(lambdaValues, testErr, '.-r');
     xlabel('Lambda');
     ylabel('Training (blue) and test (red) error');
-    %}
+    
 end
 
 

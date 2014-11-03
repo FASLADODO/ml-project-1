@@ -28,10 +28,11 @@ tX_te = [ones(size(X_te,1), 1) X_te];
 y(y < 1) = 0; % changing {-1, 1} to {0, 1}
 alpha = 0.5; % step size
 
+%penLogisticRegressionAuto(y, tX);
 
 K = 5; % CV folds
 % split data in k fold (create indices only)
-setSeed(1);
+setSeed(3);
 N = size(y,1);
 idx = randperm(N);
 Nk = floor(N/K);
@@ -75,6 +76,13 @@ err = err / K
 
 
 
-% predict using best model
+% output prediction
 beta_bestmodel = logisticRegression(y, tX, alpha);
-pHatn = exp(logSigmoid(tX * beta_bestmodel)) % probability p(y=1|data)
+pHatn = exp(logSigmoid(tX_te * beta_bestmodel)); % probability p(y=1|data)
+csvwrite('predictions_classification.csv', pHatn);
+
+fid = fopen('test_errors_classification.csv', 'w');
+fprintf(fid, 'method,rmse,0-1-loss,log-loss\n');
+fprintf(fid, 'logisticRegression,%.3f,%.3f,%.3f\n', err(3,4), err(3,5), err(3,6));
+fprintf(fid, 'penLogisticRegression,%.3f,%.3f,%.3f\n', err(4,4), err(4,5), err(4,6));
+fclose(fid);
