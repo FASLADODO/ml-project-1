@@ -51,30 +51,30 @@ EPFL \\
   We also have test data where we do not observe $\mathbf{y}$. We have $N = 600$ test examples. Our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
   \subsection{Data visualization and cleaning}
-  We started by plotting the distribution of the output to obtain Figure \ref{fig:histY}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data examples, thus we cannot discard them as outliers: we make the hypothesis that our dataset can be explained with two distinct models.
+  We started by plotting the distribution of the output to obtain Figure \ref{fig:regression-train-output}. We notice a gaussian centered around 2500, but also 144 data points above 6500. It represents more than 10\% of our data examples, thus we cannot discard them as outliers: we make the hypothesis that our dataset can be explained with two distinct models.
 
-  Since input variables were not normalized, we centered and rescaled them before going forward. Plotting each input variable against the output, we noticed that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way. To confirm our intuition, we separated points roughly at $X_{35} > 1$ (after normalization) and plotted the results in Figure \ref{fig:twoModelsRough}.
+  Since input variables were not normalized, we centered and rescaled them before going forward. Plotting each input variable against the output, we noticed that feature 35 seems to allow us to separate linearly the two hypothetical models. The categorical variables do not help in an obvious way. To confirm our intuition, we separated points roughly at $X_{35} > 1$ (after normalization) and plotted the results in Figure \ref{fig:regression-model-separation}.
 
   We also investigated the correlation first between output and input variables, and then between the features themselves. On one hand, variables 35 and 26 are very correlated with the output with correlation coefficients respectively equal to $0.67$ and $0.43$. The results using only those two variables were quite satisfying but not as good as when using all features. On the other hand, a majority of features are not linearly correlated to the output: for 34 of them the correlation coefficient is less than $0.1$. However this does not justify removal of all these variables, as a combination of them may well show higher correlation. Some features are highly correlated to each others: 8 pairs of features have a correlation coefficient higher than $0.5$.\\
   Following from these two observations, we tried to remove one feature of each highly correlated pair which is not significantly correlated to the output. Finally we decided to keep the full input matrix $\mathbf{X}$ for our regression fit since we have not faced any rank-deficiency issue and our results were quite satisfying this way.
 
   We used the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it is linearly dependent from the other ones. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
 
-  \begin{figure}[h]
+  \begin{figure}[ht]
     \center
     \subfigure[Distribution of output $\mathbf{y}$. There are to many values above 6500 to discard them as outliers.]{
       \includegraphics[width=2.5in]{figures/regression/hist-Y.pdf}
-      \label{fig:histY}
+      \label{fig:regression-train-output}
     }
     \hfill
     \subfigure[$X_{35}$ seems to enable us to linearly separate the two models simply]{
       \includegraphics[width=2.5in]{figures/regression/model-separation-X35.pdf}
-      \label{fig:twoModelsX35}
+      \label{fig:regression-model-separation-feature}
     }
     \hfill
     \subfigure[First try at separating the two models on regression data using $X_{35} > 1$]{
       \includegraphics[width=4in]{figures/regression/model-separation-rough.pdf}
-      \label{fig:twoModelsRough}
+      \label{fig:regression-model-separation}
     }
     \caption{}
   \end{figure}
@@ -96,9 +96,9 @@ EPFL \\
 
   Note that we are using ridge regression in this script. Indeed, the polynomial basis expansion makes the extended input matrix rank deficient. Least squares is therefore not suitable.
 
-  We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. Figure \ref{fig:basisExpansionTestError} illustrates clearly the biais / variance tradeoff. As the degree increases, our model is able to fit the training data better. Since we are using a regularization parameter, test error decreases as well until a certain point, but becomes the predictor become unable to generalize from a certain point. In this case, polyomial extension of degree 4 provides the best expected test error.
+  We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. Figure \ref{fig:basis-expansion-test-error} illustrates clearly the biais / variance tradeoff. As the degree increases, our model is able to fit the training data better. Since we are using a regularization parameter, test error decreases as well until a certain point, but becomes the predictor become unable to generalize from a certain point. In this case, polyomial extension of degree 4 provides the best expected test error.
 
-  \begin{figure}[h]
+  \begin{figure}[ht]
     \center
     \subfigure{
       \includegraphics[width=2.5in]{figures/regression/basis-extension-train-error.pdf}
@@ -108,7 +108,7 @@ EPFL \\
       \includegraphics[width=2.5in]{figures/regression/basis-extension-test-error.pdf}
     }
     \caption{Our model selection procedure illustrates the biais / variance tradeoff}
-    \label{fig:basisExpansionTestError}
+    \label{fig:basis-expansion-test-error}
   \end{figure}
 
   We thus chose to apply polynomial expansion of degree 4 to our subset of inputs $X_{M_1}$. We were careful not to transform the binary variables. We obtain dimensionality $D_{M_1} = 156$ and the risk to overfit, which is why we applied ridge regression next to learn our model parameters.
@@ -129,11 +129,11 @@ EPFL \\
     \item Otherwise, applies dummy encoding, basis expansion and outputs the prediction corresponding to model $M_1$ using our learnt parameter $\beta$.
   \end{enumerate}
 
-  We verified the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors using 10-fold cross validation. The average RMSE are summarized in Table \ref{predictorValidation}.
+  We verified the performance of our final predictor by computing its RMSE error and comparing it with simpler predictors using 10-fold cross validation. The average RMSE are summarized in Table \ref{predictor-validation}.
 
   From this comparison table, we can notice that ridge regression does not bring a significant improvement compared to least squares if no feature transformation is performed. This is expected. However using a polynomial expansion of degree 4 and then applying ridge regression decreases considerably the test error. This is coherent as well, since the regularization parameter prevents overfitting. Our hybrid predictor combining two models gives us the lowest expected train error.
 
-  \begin{table}[h]
+  \begin{table}[ht]
     \center
     \begin{tabular}{|r|c|c|}
       \hline
@@ -151,7 +151,7 @@ EPFL \\
       \hline
     \end{tabular}
     \caption{Validation of our prediction by comparison with simpler models using cross-validation}
-    \label{predictorValidation}
+    \label{predictor-validation}
   \end{table}
 
   Finally, we produced our predictions for the given \texttt{X\_test} input vector using the hybrid predictor and wrote them to \texttt{predictions\_regression.csv}.
@@ -176,7 +176,7 @@ EPFL \\
 
   Finally, we applied penalized logistic regression to obtain our best result over D2. As explained in section \ref{regression-fit} for ridge regression, our penalized logistic regression function selects the most appropriate regularization parameter $\lambda$ among a range of values by computing the expected test error. In this case, $\lambda \in [10^{-2}; 10^2]$.
 
-  We summarize three relevant expected error measures in Table \ref{classifierValidation}.
+  We summarize three relevant expected error measures in Table \ref{classifier-validation}.
 
   \begin{table}[ht]
     \center
@@ -191,7 +191,7 @@ EPFL \\
       \hline
     \end{tabular}
     \caption{Validation of our prediction. As described earlier, feature transformations were applied.}
-    \label{classifierValidation}
+    \label{classifier-validation}
   \end{table}
 
   \subsection{Predictions}
@@ -199,7 +199,7 @@ EPFL \\
 
   We check our output visually on Figure \ref{fig:classification-output} and verify that the results are in $[0; 1]$. We observe a distribution skewed towards 1, which is consistant with the fact that about $70\%$ of the training examples belong to $C_2$.
 
-  \begin{figure}[h]
+  \begin{figure}[ht]
     \center
     \includegraphics[width=2.5in]{figures/classification/output-phat.pdf}
     \caption{Repartition of the output probabilities}
@@ -207,7 +207,7 @@ EPFL \\
   \end{figure}
 
 \section{Summary}
-In this report, we analyzed 2 datasets: one regression dataset and one classification dataset. 
+In this report, we applied machine learning techniques to two problems: a regression and a classification dataset.
 
 In our regression dataset we found that our data was following 2 models. For the most complex model we found ridge regression applied after features transformations with a polynomial function of degree 4 is a reasonable fit. On the simplest model, a constant value returns a good fit. We estimate that the average test error is TODO
 
