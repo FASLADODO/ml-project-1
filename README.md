@@ -24,10 +24,10 @@ EPFL's Pattern Classification and Machine Learning first course project
 - [X] Update report with our results
 
 ### Classification dataset
-- [ ] Verify / debug automatic penalized logistic regression
-- [ ] Minimize the train and test error
-- [ ] Check the stability of the results
-- [ ] Output predictions to CSV
+- [X] Verify / debug automatic penalized logistic regression
+- [X] Minimize the train and test error
+- [X] Check the stability of the results
+- [X] Output predictions to CSV
 - [ ] Update report with our results
 
 ### Predictions
