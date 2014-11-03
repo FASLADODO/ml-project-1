@@ -100,8 +100,14 @@ EPFL \\
 
   \begin{figure}[h]
     \center
-    \includegraphics[width=3in]{figures/regression/basis-extension-test-error.pdf}
-    \caption{}
+    \subfigure{
+      \includegraphics[width=2.5in]{figures/regression/basis-extension-train-error.pdf}
+    }
+    \hfill
+    \subfigure{
+      \includegraphics[width=2.5in]{figures/regression/basis-extension-test-error.pdf}
+    }
+    \caption{Our model selection procedure illustrates the biais / variance tradeoff}
     \label{fig:basisExpansionTestError}
   \end{figure}
 
@@ -131,20 +137,20 @@ EPFL \\
     \center
     \begin{tabular}{|r|c|c|}
       \hline
-                                              & Train RMSE & Test RMSE \\
+      \textbf{10-fold cross validation estimates} & Train RMSE & Test RMSE \\
       \hline
-      Constant output over the whole dataset  & 1.006680   & 0.971525 \\
+      Constant output                             & 0.999596   & 0.998914  \\
       \hline
-      Least squares over the whole dataset    & 0.512306   & 0.531639 \\
+      Least squares                               & 0.512271   & 0.534063  \\
       \hline
-      Ridge regression over the whole dataset & 0.523865   & 0.526744 \\
+      Ridge regression                            & 0.513674   & 0.532057  \\
       \hline
-      Basis functions and Ridge reg over the whole dataset & 0.523865   & 0.526744 \\
+      Basis functions and ridge regression        & 0.298089   & 0.335880  \\
       \hline
-      Hybrid predictor                        & 0.320812   & 0.347088 \\
+      Hybrid predictor                            & 0.168528   & 0.203762  \\
       \hline
     \end{tabular}
-    \caption{Validation of our prediction by comparison with simpler models over many train / test splits}
+    \caption{Validation of our prediction by comparison with simpler models using cross-validation}
     \label{predictorValidation}
   \end{table}
 
