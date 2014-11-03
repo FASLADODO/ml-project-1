@@ -20,14 +20,14 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
     errors = 0; % Can be used to plot error VS iteration number
 	progress = 10;
 
-	errr = []
+	
 	while ((k < maxIters) && (abs(progress) > epsilon))
 		k = k + 1;
 		
 		% Newton's method step
         oldErr = err;
 		[err, g, H] = penalizedLogisticRegressionLoss(y, tX, beta, lambda);
-		errr = [errr err]
+		
         descentDirection = H \ g;
 		beta = beta - alpha .* descentDirection;
 		
@@ -44,7 +44,6 @@ function betaStar = penLogisticRegression(y, tX, alpha, lambda)
 		%fprintf('%d| L = %.4f,  norm(beta) = %.4f\n', k, err, norm(beta, 2));
 	end;
 
-	plot(errr, 'o')
     
     %{
     figure;

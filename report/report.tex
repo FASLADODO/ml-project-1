@@ -38,7 +38,7 @@
 
 
 \begin{abstract}
-  In this report, we summarize our findings for first ML project. We analyzed two datasets, regression (D1) and classification (D2). Both datasets' input proved correlated to their output. In D1, we found that we could separate two different models and thus trained both a constant-valued model and a more elaborate model using basis functions transformation and ridge regression. The appropriate model is applied based on a learnt classifier. In D2, we trained a binary classifier using basis functions expansion and penalized logistic regression. Both predictors achieve satisfactory results.
+  In this report, we summarize our findings for the first ML project. We analyzed two datasets, regression (D1) and classification (D2). Both datasets' input proved correlated to their output. In D1, we found that we could separate two different models and thus trained both a constant-valued model and a more elaborate model using basis functions transformation and ridge regression. The appropriate model is applied based on a learnt classifier. In D2, we trained a binary classifier using basis functions expansion and penalized logistic regression. Both predictors achieve good results.
 \end{abstract}
 
 
@@ -46,7 +46,7 @@
 \section{The regression dataset (D1)}
 
   \subsection{Dataset description}
-  Our training data consists of output variable $\mathbf{y}$ and input variables $\mathbf{X}$. We have $N = 1400$ data examples. Each input vector $\mathbf{x}_n$ is of dimensionality $D = 44$. Out of these 44 features, 35 are real-valued while 4 variables are binary and 5 variables are categorical, 4 of them with 4 categories and 1 with 3 categories.
+  Our training data consists of output variable $\mathbf{y}$ and input variables $\mathbf{X}$. We have $N = 1400$ data examples. Each input vector $\mathbf{x}_n$ is of dimensionality $D = 44$. Out of these 44 features, 35 are real-valued while 4 variables are binary and 5 variables are categorical (4 of the categorical variables have 4 categories each and the remaining 1 has 3 categories).
 
   We also have test data where we do not observe $\mathbf{y}$. We have $N = 600$ test examples. Our goal is to produce predictions for test examples, as well as an approximation of the test error.
 
@@ -58,7 +58,7 @@
   We also investigated the correlation first between output and input variables, and then between the features themselves. On one hand, variables 35 and 26 are very correlated with the output with correlation coefficients respectively equal to $0.67$ and $0.43$. The results using only those two variables were quite satisfying but not as good as when using all features. On the other hand, a majority of features are not linearly correlated to the output: for 34 of them the correlation coefficient is less than $0.1$. However this does not justify removal of all these variables, as a combination of them may well show higher correlation. Some features are highly correlated to each others: 8 pairs of features have a correlation coefficient higher than $0.5$.\\
   Following from these two observations, we tried to remove one feature of each highly correlated pair which is not significantly correlated to the output. Finally we decided to keep the full input matrix $\mathbf{X}$ for our regression fit since we have not faced any rank-deficiency issue and our results were quite satisfying this way.
 
-  We used the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it is linearly dependent from the other ones. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
+  We used the dummy encoding technique for categorical variables (the binary variables do not require dummy encoding). When using the \texttt{dummyvar} function from Matlab, we were cautious to remove one of the resulting columns since it induced colinearity with the constant term in the first column. This gives us a total of 50 input variables and $\mathbf{X}$ still seems well-behaved.
 
   \begin{figure}[ht]
     \center
@@ -72,7 +72,7 @@
       \label{fig:regression-model-separation-feature}
     }
     \hfill
-    \subfigure[First try at separating the two models on regression data using $X_{35} > 1$]{
+    \subfigure[First try separating the two models on regression data using $X_{35} > 1$]{
       \includegraphics[width=4in]{figures/regression/model-separation-rough.pdf}
       \label{fig:regression-model-separation}
     }
@@ -80,7 +80,7 @@
   \end{figure}
 
   \subsection{Model separation}
-  From our explorative data analysis phase, we emitted the hypothesis that our dataset could be represented by two distinct models. We checked our intuition by learning a single model on the whole dataset, and compared it with a two-model fit learnt over a roughly split dataset. The test error decreased dramatically when using two models. This motivated us to learn a classifier in order to refine the dataset split.
+  From our explorative data analysis phase, we suspected that our dataset could be represented by two distinct models. We checked our intuition by learning a single model on the whole dataset, and compared it with a two-model fit learnt over a roughly split dataset. The test error decreased dramatically when using two models. This motivated us to learn a classifier in order to refine the dataset split.
 
   We chose a threshold on the output value ($y_n > 6200$) and used it to convert $\mathbf{y}$ to a $\{0, 1\}$ label vector. This enabled us to apply logistic regression directly and learn a classifier. We checked the result visually by plotting the two parts of the dataset in different colors.
 
@@ -96,7 +96,7 @@
 
   Note that we are using ridge regression in this script. Indeed, the polynomial basis expansion makes the extended input matrix rank deficient. Least squares is therefore not suitable.
 
-  We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. Figure \ref{fig:basis-expansion-test-error} illustrates clearly the biais / variance tradeoff. As the degree increases, our model is able to fit the training data better. Since we are using a regularization parameter, test error decreases as well until a certain point, but becomes the predictor become unable to generalize from a certain point. In this case, polyomial extension of degree 4 provides the best expected test error.
+  We could then plot the repartition of test and train error over the $s$ trials, allowing us to select the most adapted degree with high confidence about the stability. Figure \ref{fig:basis-expansion-test-error} illustrates clearly the bias-variance tradeoff. As the degree increases, our model is able to fit the training data better. Since we are using a regularization parameter, test error decreases as well until a certain point, but becomes the predictor become unable to generalize from a certain point. In this case, polynomial extension of degree 4 provides the best expected test error.
 
   \begin{figure}[ht]
     \center
@@ -176,7 +176,7 @@
   \subsection{Logistic regression fit}
   In order to quickly get a baseline for the quality of our models, we learnt two of the simplest models: constant-valued and using least-squares. We carried on by applying logistic regression and saw a dramatic improvement in the expected quality of the results (from $30\%$ of misclassifications to less than $10\%$). We made sure to use the ``log-exp'' trick (seen during the exercise sessions) to avoid numerical issues.
 
-  Finally, we applied penalized logistic regression to obtain our best result over D2. As explained in section \ref{regression-fit} for ridge regression, our penalized logistic regression function selects the most appropriate regularization parameter $\lambda$ among a range of values by computing the expected test error. In this case, $\lambda \in [10^{-2}; 10^2]$.
+  Finally, we applied penalized logistic regression to obtain our best result over D2. As explained in section \ref{regression-fit} for ridge regression, our penalized logistic regression function selects the most appropriate regularization parameter $\lambda$ among a range of values by computing the expected test error. In this case, $\lambda \in [10^{-2}; 10^2]$. We used 0.5 for the value of $alpha$ since lower values were giving slower convergence.
 
   We summarize three relevant expected error measures in Table \ref{classifier-validation}.
 
