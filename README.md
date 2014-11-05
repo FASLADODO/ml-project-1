@@ -3,6 +3,15 @@ ml-project-1
 
 EPFL's Pattern Classification and Machine Learning first course project
 
+Team members
+------------
+
+- Jade Copet
+- Merlin Nimier-David
+- Krishna Sapkota
+
+The project was designed by Prof. Emtiyaz & TAs. Some ML methods and helper functions were provided by the teaching team.
+
 Project structure
 -----------------
 
